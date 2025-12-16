@@ -7,7 +7,7 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [Register, AuthenticationLayout, Login, TextInput, ReactiveFormsModule],
+  imports: [Login],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
