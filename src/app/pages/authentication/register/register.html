@@ -1,0 +1,24 @@
+<app-authentication-layout>
+  <!-- LEFT -->
+  <div class="left-side">
+    <div class="tabs">
+      <button class="tab" [class.active]="activeTab === 'company'" (click)="setTab('company')">
+        Company
+      </button>
+
+      <button class="tab" [class.active]="activeTab === 'personal'" (click)="setTab('personal')">
+        Personal
+      </button>
+    </div>
+
+    <app-company-form *ngIf="activeTab === 'company'"></app-company-form>
+    <app-personal-form *ngIf="activeTab === 'personal'"></app-personal-form>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-side">
+    <h1>Welcome to As'hal</h1>
+    <h2>Create your account to continue</h2>
+    <button class="right-btn">Login</button>
+  </div>
+</app-authentication-layout>

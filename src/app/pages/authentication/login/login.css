@@ -1,0 +1,177 @@
+/* ================= CARD ================= */
+.card {
+  max-width: 900px;
+  width: 55%;
+  min-height: 420px;
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  background: white;
+}
+
+/* ================= LEFT SIDE ================= */
+.left-side {
+  flex: 0 0 220px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  background-image: linear-gradient(
+    to bottom,
+    #008b37,
+    #008b37,
+    #007e66,
+    #006c88,
+    #00578f,
+    #003d7b
+  );
+}
+
+.left-side h1 {
+  font-size: clamp(18px, 2.2vw, 25px);
+  color: white;
+  text-align: center;
+}
+
+.left-side h2 {
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.left-btn {
+  align-self: center;
+  border-radius: 20px;
+  padding: 10px 40px;
+  background-color: white;
+  color: #008b37;
+  font-weight: bold;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto; /* keep shape */
+}
+
+/* ================= RIGHT SIDE ================= */
+.right-side {
+  flex: 1;
+  padding: 30px;
+  background-color: white;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.title {
+  font-size: 25px;
+  font-weight: bold;
+  color: #003d7b;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+/* ================= FORM ================= */
+.right-side form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.feild h3 {
+  font-size: 14px;
+}
+
+.feild h6 {
+  display: block;
+  font-size: 12px;
+  text-align: right;
+  margin-top: 6px;
+  cursor: pointer;
+}
+
+/* ================= INPUTS ================= */
+.input-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+}
+
+.input-field {
+  width: 100%;
+  max-width: 100%;
+  padding: 12px 45px 12px 15px;
+  border: none;
+  background-color: #cccccc;
+  border-radius: 15px;
+  outline: none;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.input-field:focus {
+  background-color: white;
+  border: 2px solid #008b37;
+}
+
+/* ================= ICONS ================= */
+.input-container i {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #003d7b;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+/* ================= BUTTON ================= */
+.btn {
+  align-self: center;
+  border-radius: 20px;
+  padding: 12px 50px;
+  background-color: #003d7b;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 1024px) {
+  .card {
+    width: 75%;
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    flex-direction: column;
+  }
+
+  .left-side {
+    flex: none;
+    width: 100%;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .right-side {
+    border-radius: 0 0 20px 20px;
+  }
+
+  /* Only login button stretches */
+  .btn {
+    width: 100%;
+  }
+
+  /* Register button keeps its shape */
+  .left-btn {
+    width: auto;
+    align-self: center;
+  }
+}

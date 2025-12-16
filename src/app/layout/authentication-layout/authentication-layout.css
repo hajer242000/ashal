@@ -1,0 +1,25 @@
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  max-width: 900px;
+  width: 55%;
+  min-height: 420px;
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  background: white;
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  .card {
+    width: 90%;
+    flex-direction: column;
+  }
+}

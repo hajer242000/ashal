@@ -1,12 +1,17 @@
 import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Register } from './pages/authentication/register/register';
+import { AuthenticationLayout } from './layout/authentication-layout/authentication-layout';
+import { Login } from './pages/authentication/login/login';
+import { TextInput } from './components/text-input/text-input';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [Register, AuthenticationLayout, Login, TextInput, ReactiveFormsModule],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrl: './app.css',
 })
 export class App {
   protected readonly title = signal('ashal');
+  control = new FormControl('');
 }

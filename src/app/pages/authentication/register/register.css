@@ -1,0 +1,89 @@
+.card {
+  max-width: 900px;
+  width: 55%;
+  min-height: 420px;
+  display: flex;
+  border-radius: 20px;
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);
+  overflow: hidden;
+  background: white;
+}
+
+/* ================= LEFT SIDE ================= */
+.right-side {
+  flex: 0 0 220px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  background-image: linear-gradient(
+    to bottom,
+    #008b37,
+    #008b37,
+    #007e66,
+    #006c88,
+    #00578f,
+    #003d7b
+  );
+}
+
+.right-side h1 {
+  font-size: clamp(18px, 2.2vw, 25px);
+  color: white;
+  text-align: center;
+}
+
+.right-side h2 {
+  font-size: clamp(13px, 1.4vw, 15px);
+  color: white;
+  text-align: center;
+  font-weight: 600;
+}
+
+.right-btn {
+  align-self: center;
+  border-radius: 20px;
+  padding: 10px 40px;
+  background-color: white;
+  color: #008b37;
+  font-weight: bold;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto; /* keep shape */
+}
+
+.tabs {
+  display: flex;
+  gap: 30px;
+  margin: 20px 0 30px;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tab {
+  background: none;
+  border: none;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #9e9e9e;
+  cursor: pointer;
+  position: relative;
+}
+
+.tab.active {
+  color: #008b37;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: #008b37;
+  border-radius: 2px;
+}
