@@ -1,6 +1,17 @@
 @import "tailwindcss";
 @import "@angular/material/prebuilt-themes/azure-blue.css";
 
+/* Fix for Tailwind Preflight vs Angular Material */
+.mat-mdc-form-field {
+  display: block !important;
+}
+
+/* Fix missing notch gap in outlined fields */
+.mdc-notched-outline__notch {
+  border-right: none !important;
+}
+
+
 html,
 body {
   height: 100%;

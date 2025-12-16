@@ -10,6 +10,9 @@
     }
 
     <input matInput type="text" [formControl]="control" [placeholder]="!isLabeled ? label : ''" />
+    @if (icon) {
+    <mat-icon matSuffix>{{ icon }}</mat-icon>
+    }
 
     @if (showErrors && control.touched) { @if (control.errors?.['required']) {
     <mat-error>Please enter a {{ label }}</mat-error>

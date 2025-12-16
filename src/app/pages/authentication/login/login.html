@@ -10,21 +10,13 @@
   <div class="right-side">
     <h1 class="title">Login</h1>
 
-    <form>
+    <form [formGroup]="form">
       <div class="feild">
-        <h3>Email</h3>
-        <div class="input-container">
-          <input class="input-field" type="email" placeholder="user@gmail.com" />
-          <i class="fa-solid fa-envelope"></i>
-        </div>
+        <app-text-input label="Email" icon="email" [control]="$any(form.get('email'))"></app-text-input>
       </div>
       <div class="feild">
-        <h3>Password</h3>
-        <div class="input-container">
-          <input class="input-field" type="password" placeholder="Password" />
-          <i class="fa-solid fa-lock"></i>
-        </div>
-        <h6>Forgot Password?</h6>
+        <app-text-input label="Password" icon="lock" [control]="$any(form.get('password'))"></app-text-input>
+        <h6 class="align-right">Forgot Password?</h6>
       </div>
 
       <button type="submit" class="btn">Login</button>
