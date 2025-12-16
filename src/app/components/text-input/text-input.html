@@ -1,14 +1,10 @@
 <div>
   @if (!isView) {
 
-  <mat-form-field
-    appearance="outline"
-    class="w-100"
-    [ngClass]="{
+  <mat-form-field appearance="outline" class="w-full" [ngClass]="{
       'mat-error-border': control.invalid && control.touched,
       'mat-success-border': control.valid && control.touched
-    }"
-  >
+    }">
     @if (isLabeled) {
     <mat-label>{{ label }}</mat-label>
     }
