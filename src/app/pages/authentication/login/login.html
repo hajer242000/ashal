@@ -2,24 +2,24 @@
   <!-- LEFT -->
   <div class="left-side">
     <h1>Welcome back to As'hal</h1>
-    <h2>Enter your information to continue</h2>
-    <button class="left-btn">Register</button>
+    <h6>Enter your information to continue to the As'hal system</h6>
+    <app-button label="Register" variant="outline" routerLink="/register"></app-button>
   </div>
 
   <!-- RIGHT -->
   <div class="right-side">
     <h1 class="title">Login</h1>
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="login()">
       <div class="feild">
         <app-text-input label="Email" icon="email" formControlName="email"></app-text-input>
       </div>
       <div class="feild">
-        <app-text-input label="Password" icon="lock" formControlName="password"></app-text-input>
+        <app-text-input label="Password" icon="lock" formControlName="password" type="password"></app-text-input>
         <h6 class="align-right">Forgot Password?</h6>
       </div>
 
-      <button type="submit" class="btn">Login</button>
+      <app-button label="Login" type="submit"></app-button>
     </form>
   </div>
 </app-authentication-layout>

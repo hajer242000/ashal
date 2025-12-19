@@ -1,6 +1,7 @@
 <app-authentication-layout>
   <!-- LEFT -->
   <div class="left-side">
+    <h1 class="title">Register</h1>
     <div class="tabs">
       <button class="tab" [class.active]="activeTab === 'company'" (click)="setTab('company')">
         Company
@@ -13,12 +14,14 @@
 
     <app-company-form *ngIf="activeTab === 'company'"></app-company-form>
     <app-personal-form *ngIf="activeTab === 'personal'"></app-personal-form>
+
+    <app-button label="Verify" [disabled]="!isFormValid" (onClick)="onVerify()"></app-button>
   </div>
 
   <!-- RIGHT -->
   <div class="right-side">
-    <h1>Welcome to As'hal</h1>
-    <h2>Create your account to continue</h2>
-    <button class="right-btn">Login</button>
+    <h1>Join us - Create new account</h1>
+    <h6>Complete the form to create your account</h6>
+    <app-button label="Login" variant="outline" routerLink="/login"></app-button>
   </div>
 </app-authentication-layout>

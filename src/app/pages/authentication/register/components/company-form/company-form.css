@@ -1,0 +1,36 @@
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.rowFeilds {
+    display: flex;
+    gap: 20px;
+}
+
+.feild {
+    flex: 1;
+    min-width: 0;
+}
+
+.btn {
+    align-self: center;
+    border-radius: 20px;
+    padding: 12px 50px;
+    background-color: #003d7b;
+    color: white;
+    font-weight: bold;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .rowFeilds {
+        flex-direction: column;
+    }
+}

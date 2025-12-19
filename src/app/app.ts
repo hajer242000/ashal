@@ -1,17 +1,18 @@
 import { Component, signal } from '@angular/core';
-import { Register } from './pages/authentication/register/register';
-import { AuthenticationLayout } from './layout/authentication-layout/authentication-layout';
-import { Login } from './pages/authentication/login/login';
-import { TextInput } from './components/text-input/text-input';
-import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
+import { routeAnimations } from './core/animations/route-animations';
 
 @Component({
   selector: 'app-root',
-  imports: [Login],
+  imports: [RouterOutlet],
   templateUrl: './app.html',
   styleUrl: './app.css',
+  animations: [routeAnimations]
 })
 export class App {
   protected readonly title = signal('ashal');
-  control = new FormControl('');
+
+  prepareRoute(outlet: RouterOutlet) {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  }
 }

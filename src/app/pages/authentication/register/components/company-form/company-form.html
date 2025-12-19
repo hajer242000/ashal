@@ -1,19 +1,42 @@
-<form>
+<form [formGroup]="form">
   <div class="rowFeilds">
     <div class="feild">
-      <h3>Commercial Registration</h3>
-      <div class="input-container">
-        <input type="text" placeholder="cd..." />
-      </div>
+      <app-text-input label="Commercial Registration" formControlName="commercialRegistration"></app-text-input>
     </div>
 
     <div class="feild">
-      <h3>Company Name</h3>
-      <div class="input-container">
-        <input type="text" placeholder="xxx xxxx" />
-      </div>
+      <app-text-input label="Company Name" formControlName="companyName"></app-text-input>
     </div>
   </div>
 
-  <button class="btn">Register</button>
+  <div class="rowFeilds">
+    <div class="feild">
+      <app-text-input label="Email Address" formControlName="email"></app-text-input>
+    </div>
+
+    <div class="feild">
+      <app-text-input label="GSM No" formControlName="gsm"></app-text-input>
+    </div>
+  </div>
+
+  <div class="rowFeilds">
+    <div class="feild">
+      <app-text-input label="Password" type="password" formControlName="password"></app-text-input>
+    </div>
+
+    <div class="feild">
+      <app-text-input label="Confirm Password" type="password" formControlName="confirmPassword"></app-text-input>
+    </div>
+  </div>
+
+  <div class="rowFeilds">
+    <div class="feild">
+      <app-text-input label="username" formControlName="username"></app-text-input>
+    </div>
+
+    <div class="feild">
+      <app-file-uploader label="Commercial Registration"
+        formControlName="commercialRegistrationFile"></app-file-uploader>
+    </div>
+  </div>
 </form>

@@ -15,14 +15,24 @@ import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-text-input',
-  imports: [MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, CommonModule, MatIconModule],
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
+    CommonModule,
+    MatIconModule,
+  ],
   templateUrl: './text-input.html',
   styleUrl: './text-input.css',
 })
 export class TextInput {
   @Input() label = '';
   @Input() icon = '';
+  @Input() type = 'text';
+
   @Input() isLabeled: boolean = true;
+
   @Input() showErrors: boolean = true;
   @Input() isView: boolean = false;
 

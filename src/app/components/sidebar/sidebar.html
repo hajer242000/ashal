@@ -1,0 +1,23 @@
+<div class="sidebar-container" [class.collapsed]="isCollapsed">
+    <div class="sidebar-header">
+        <div class="header-content" *ngIf="!isCollapsed">
+            <h1 class="logo">as'hal</h1>
+            <button class="toggle-btn" (click)="toggleSidebar()">
+                <mat-icon>menu_open</mat-icon>
+            </button>
+        </div>
+        <button class="toggle-btn collapsed-btn" *ngIf="isCollapsed" (click)="toggleSidebar()">
+            <mat-icon class="logo-icon">menu</mat-icon>
+        </button>
+    </div>
+    <nav class="sidebar-nav">
+        <ul>
+            <li *ngFor="let item of menuItems">
+                <a [routerLink]="item.route" routerLinkActive="active" class="nav-item">
+                    <mat-icon>{{ item.icon }}</mat-icon>
+                    <span class="nav-title" *ngIf="!isCollapsed">{{ item.title }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

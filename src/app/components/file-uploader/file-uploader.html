@@ -1,0 +1,17 @@
+<div class="file-uploader-container" [class.disabled]="isDisabled">
+  <input type="file" #fileInput [accept]="accept" (change)="onFileSelected($event)" hidden />
+
+  <div
+    class="upload-area"
+    [class.invalid]="ngControl.invalid && ngControl.touched"
+    (click)="fileInput.click()"
+  >
+    <span class="placeholder" *ngIf="!fileName">{{ label }}</span>
+    <span class="file-name" *ngIf="fileName">{{ fileName }}</span>
+    <i class="icon" aria-hidden="true">&#128193;</i>
+  </div>
+
+  <div *ngIf="ngControl.invalid && ngControl.touched" class="error-message">
+    Please upload {{ label }}
+  </div>
+</div>

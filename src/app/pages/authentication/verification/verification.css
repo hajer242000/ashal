@@ -1,0 +1,154 @@
+/* ================= LEFT SIDE (Forms) ================= */
+.left-side {
+  flex: 1;
+  padding: 30px;
+  background-color: white;
+  box-sizing: border-box;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+}
+
+.btn {
+  align-self: center;
+  border-radius: 30px;
+  padding: 10px 60px;
+  background-color: #003d7b;
+  color: white;
+  font-weight: bold;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto;
+}
+
+.btn:hover {
+  align-self: center;
+  border-radius: 30px;
+  padding: 10px 60px;
+  background-color: white;
+  color: #003d7b;
+  font-weight: bold;
+  border: 2px solid #003d7b;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto;
+}
+
+.inputfield {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.input {
+  height: 3em;
+  width: 3em;
+  border: 2px solid #dad9df;
+  outline: none;
+  text-align: center;
+  font-size: 1.5em;
+  border-radius: 0.3em;
+  background-color: #ffffff;
+  outline: none;
+  /*Hide number field arrows*/
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#submit {
+  background-color: #044ecf;
+  border: none;
+  outline: none;
+  font-size: 1.2em;
+  padding: 0.8em 2em;
+  color: #ffffff;
+  border-radius: 0.1em;
+  margin: 1em auto 0 auto;
+  cursor: pointer;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.input:disabled {
+  color: #89888b;
+}
+
+.input:focus {
+  border: 3px solid #008b37;
+}
+
+/* ================= RIGHT SIDE (Green Panel) ================= */
+.right-side {
+  flex: 0 0 300px;
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+  align-items: center;
+
+  background-image: linear-gradient(to bottom,
+      #008b37,
+      #008b37,
+      #007e66,
+      #006c88,
+      #00578f,
+      #003d7b);
+}
+
+.right-side h1 {
+  font-size: 32px;
+  line-height: 1.1;
+  color: white;
+  text-align: center;
+  font-weight: bold;
+}
+
+.title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #003d7b;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.right-side h6 {
+  font-size: 14px;
+  color: white;
+  text-align: center;
+  font-weight: 500;
+}
+
+.right-btn {
+  align-self: center;
+  border-radius: 30px;
+  padding: 10px 40px;
+  background-color: rgba(100, 148, 237, 0);
+  color: white;
+  font-weight: bold;
+  border: 2px solid white;
+  font-size: 18px;
+  cursor: pointer;
+  width: auto;
+}
+
+p {
+  color: #89888b;
+}

@@ -1,33 +1,50 @@
 <div>
   @if (!isView) {
 
-  <mat-form-field appearance="outline" class="w-full" [ngClass]="{
+  <mat-form-field
+    appearance="outline"
+    class="w-full"
+    [ngClass]="{
       'mat-error-border': control.invalid && control.touched,
       'mat-success-border': control.valid && control.touched
-    }">
+    }"
+    subscriptSizing="dynamic"
+  >
     @if (isLabeled) {
     <mat-label>{{ label }}</mat-label>
     }
 
-    <input matInput type="text" [formControl]="control" [placeholder]="!isLabeled ? label : ''" />
+    <input matInput [type]="type" [formControl]="control" [placeholder]="!isLabeled ? label : ''" />
     @if (icon) {
     <mat-icon matSuffix>{{ icon }}</mat-icon>
     }
-
-    @if (showErrors && control.touched) { @if (control.errors?.['required']) {
-    <mat-error>Please enter a {{ label }}</mat-error>
-    } @if (control.errors?.['minlength']) {
-    <mat-error>
-      {{ label }} must be at least {{ control.errors?.['minlength']?.requiredLength }} characters
-    </mat-error>
-    } @if (control.errors?.['maxlength']) {
-    <mat-error>
-      {{ label }} must be at most {{ control.errors?.['maxlength']?.requiredLength }} characters
-    </mat-error>
-    } }
   </mat-form-field>
 
-  } @else {
+  @if (showErrors && control.touched) { @if (control.errors?.['required']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">Please enter a {{ label }}</div>
+  } @if (control.errors?.['minlength']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">
+    {{ label }} must be at least {{ control.errors?.['minlength']?.requiredLength }} characters
+  </div>
+  } @if (control.errors?.['maxlength']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">
+    {{ label }} must be at most
+    {{
+    control.errors?.['maxlength']?.requiredLength }}
+    characters
+  </div>
+  } @if (control.errors?.['email']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">{{ label }} must be an Email</div>
+  } @if (control.errors?.['minLength']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">Password must be at least 8 characters long</div>
+  } @if (control.errors?.['passwordStrength']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">
+    Password must contain at least one uppercase letter, one lowercase letter, one number, and one
+    special character
+  </div>
+  }@if (control.errors?.['passwordMismatch']) {
+  <div class="text-red-600 text-xs ml-4 mt-1 mb-2">password is not match</div>
+  } } } @else {
   <p>{{ control.value || '-' }}</p>
   }
 </div>

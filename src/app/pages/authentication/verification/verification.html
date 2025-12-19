@@ -1,0 +1,22 @@
+<app-authentication-layout>
+  <!-- LEFT -->
+  <div class="left-side">
+    <h1 class="title">Verify Your Identity</h1>
+    <p>Please Enter The Verification Code We Sent To Your Phone</p>
+    <div class="container">
+      <div class="inputfield">
+        <input *ngFor="let digit of otp; let i = index; trackBy: trackByFn" type="text" inputmode="numeric"
+          maxlength="1" class="input" [value]="digit" #otpInput (input)="onInput($event, i)"
+          (keydown)="onKeyDown($event, i)" (focus)="handleFocus(i)" (paste)="handlePaste($event, i)" />
+      </div>
+    </div>
+    <app-button label="Verify" (onClick)="validateOTP()"></app-button>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right-side">
+    <h1>Join us - Create new account</h1>
+    <h6>Complete the form to create your account</h6>
+    <app-button label="Login" variant="outline" routerLink="/login"></app-button>
+  </div>
+</app-authentication-layout>
