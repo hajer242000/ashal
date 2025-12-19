@@ -14,7 +14,7 @@ import { AppButton } from '../../../components/button/button';
 export class Verification implements AfterViewInit {
   @ViewChildren('otpInput') inputs!: QueryList<ElementRef>;
 
-  otp = ['', '', '', ''];
+  otp = ['', '', '', '', '', ''];
   isComplete = false;
 
   ngAfterViewInit() {
