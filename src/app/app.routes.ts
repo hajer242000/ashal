@@ -23,6 +23,12 @@ export const routes: Routes = [
     data: { animation: 'verificationPage' },
   },
   {
+    path: 'forgot-password',
+    loadComponent: () =>
+      import('./pages/authentication/forgot-password/forgot-password').then((c) => c.ForgotPassword),
+    data: { animation: 'ForgotPasswordPage' },
+  },
+  {
     path: 'applicant',
     loadChildren: () => import('./pages/applicant/applicant.routes').then((m) => m.APPLICANT_ROUTES),
   },
