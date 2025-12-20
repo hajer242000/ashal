@@ -5,21 +5,21 @@
 
             <!-- Connector Line -->
             <div *ngIf="!last" class="absolute left-[22px] top-12 bottom-[-32px] w-[2px]"
-                [class]="step.status === 'completed' ? 'bg-[#008b37]' : 'bg-gray-200'">
+                [class]="step.status === 'completed' ? 'bg-secondary' : 'bg-gray-200'">
             </div>
 
             <!-- Circle Indicator -->
             <div class="relative z-10 flex-shrink-0">
                 <!-- Completed (Checkmark) -->
                 <div *ngIf="step.status === 'completed'"
-                    class="w-12 h-12 rounded-full bg-[#008b37] flex items-center justify-center shadow-md">
+                    class="w-12 h-12 rounded-full bg-secondary flex items-center justify-center shadow-md">
                     <span class="material-icons text-white text-2xl" *ngIf="!step.icon">check</span>
                     <span class="material-icons text-white text-2xl" *ngIf="step.icon">{{ step.icon }}</span>
                 </div>
 
                 <!-- Active (Number/Icon) -->
                 <div *ngIf="step.status === 'active'"
-                    class="w-12 h-12 rounded-full bg-[#003d7b] text-white flex items-center justify-center text-xl font-bold shadow-md ring-4 ring-blue-50">
+                    class="w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center text-xl font-bold shadow-md ring-4 ring-blue-50">
                     {{ i + 1 }}
                 </div>
 
@@ -34,12 +34,11 @@
             <div class="flex-1">
                 <div
                     [class]="'bg-white rounded-xl p-6 border transition-all duration-300 ' + 
-                    (step.status === 'active' ? 'border-l-4 border-l-[#003d7b] shadow-md border-gray-100' : 'border-gray-50 shadow-sm')">
+                    (step.status === 'active' ? 'border-l-4 border-l-primary shadow-md border-gray-100' : 'border-gray-50 shadow-sm')">
 
                     <div class="flex justify-between items-start mb-2">
                         <div>
-                            <h4 class="text-lg font-bold text-gray-900"
-                                [class.text-[#003d7b]]="step.status === 'active'">
+                            <h4 class="text-lg font-bold text-gray-900" [class.text-primary]="step.status === 'active'">
                                 {{ step.label }}
                             </h4>
                             <p class="text-sm text-gray-500 mt-1">{{ step.description }}</p>
@@ -47,8 +46,8 @@
 
                         <!-- Status Badge -->
                         <span [class]="'px-3 py-1 rounded-full text-xs font-semibold ' + 
-                            (step.status === 'completed' ? 'bg-green-100 text-[#008b37]' : 
-                             (step.status === 'active' ? 'bg-blue-100 text-[#003d7b]' : 'bg-gray-100 text-gray-500'))">
+                            (step.status === 'completed' ? 'bg-green-100 text-secondary' : 
+                             (step.status === 'active' ? 'bg-blue-100 text-primary' : 'bg-gray-100 text-gray-500'))">
                             {{ step.statusLabel || (step.status | titlecase) }}
                         </span>
                     </div>
@@ -61,7 +60,7 @@
 
                     <!-- Action Link (for active step) -->
                     <div *ngIf="step.status === 'active'" class="mt-4 pt-4 border-t border-gray-100">
-                        <button class="text-[#003d7b] text-sm font-bold flex items-center gap-1 hover:underline">
+                        <button class="text-primary text-sm font-bold flex items-center gap-1 hover:underline">
                             View details
                             <span class="material-icons text-sm">arrow_forward</span>
                         </button>

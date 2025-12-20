@@ -1,4 +1,19 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary: #003d7b;
+  --color-primary-light: #004e9c;
+  --color-primary-dark: #002a55;
+
+  --color-secondary: #008b37;
+  --color-secondary-light: #00a340;
+  --color-secondary-dark: #00702c;
+
+  --color-accent: #f97316;
+  --color-accent-light: #fb923c;
+  --color-accent-dark: #ea580c;
+}
+
 @import "@angular/material/prebuilt-themes/azure-blue.css";
 
 /* Fix for Tailwind Preflight vs Angular Material */
@@ -40,7 +55,7 @@ body {
 
 .form-control:focus,
 .form-select:focus {
-  @apply ring-2 ring-[#003d7b] border-[#003d7b];
+  @apply ring-2 ring-primary border-primary;
 }
 
 .form-select {
@@ -53,7 +68,7 @@ body {
 }
 
 .btn-primary {
-  @apply bg-[#008b37] text-white hover:bg-[#00702c] shadow-sm hover:shadow active:transform active:scale-95;
+  @apply bg-secondary text-white hover:bg-secondary-dark shadow-sm hover:shadow active:transform active:scale-95;
 }
 
 .btn-secondary {
@@ -61,5 +76,5 @@ body {
 }
 
 .btn-outline-primary {
-  @apply border-2 border-[#008b37] text-[#008b37] hover:bg-green-50;
+  @apply border-2 border-secondary text-secondary hover:bg-green-50;
 }
