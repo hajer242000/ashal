@@ -1,0 +1,47 @@
+<div class="table-responsive">
+    <table class="custom-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>GOVERNMENT</th>
+                <th>REQUEST TYPE</th>
+                <th>CREATED DATE</th>
+                <th>LAST ACTION DATE</th>
+                <th>STATUS</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let req of requests; let i = index">
+                <td class="font-bold">{{ i + 1 }}</td>
+                <td>{{ req.governorate }}</td>
+                <td>{{ req.requestType }}</td>
+                <td>
+                    <div class="date-cell">
+                        <span>{{ req.createdDate | date:'dd.MM.yyyy' }}</span>
+                        <span class="time-sub">{{ req.createdDate | date:'shortTime' }}</span>
+                    </div>
+                </td>
+                <td>
+                    <div class="date-cell">
+                        <span>{{ req.lastActionDate | date:'dd.MM.yyyy' }}</span>
+                        <span class="time-sub">{{ req.lastActionDate | date:'shortTime' }}</span>
+                    </div>
+                </td>
+                <td>
+                    <span class="status-pill" [ngClass]="{
+                        'status-completed': req.status === 'Completed' || req.status === 'Approved',
+                        'status-pending': req.status === 'Pending' || req.status === 'In Progress',
+                        'status-rejected': req.status === 'Rejected'
+                    }">
+                        <span class="material-icons tiny-icon"
+                            *ngIf="req.status === 'Completed' || req.status === 'Approved'">check_circle</span>
+                        <span class="material-icons tiny-icon"
+                            *ngIf="req.status === 'Pending' || req.status === 'In Progress'">hourglass_empty</span>
+                        <span class="material-icons tiny-icon" *ngIf="req.status === 'Rejected'">cancel</span>
+                        {{ req.status }}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

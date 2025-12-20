@@ -20,18 +20,21 @@ export const mockAuthInterceptor: HttpInterceptorFn = (req, next) => {
 
         // Simulate user types
         if (email === 'admin@ashal.com') {
+            localStorage.setItem('mock_role', 'Admin');
             responseBody = {
                 role: 'Admin',
                 requiresOtp: true,
                 message: 'OTP sent to email'
             };
         } else if (email === 'user@ashal.com') {
+            localStorage.setItem('mock_role', 'User');
             responseBody = {
                 role: 'User',
                 requiresOtp: true,
                 message: 'OTP sent to email'
             };
         } else {
+            localStorage.setItem('mock_role', 'Applicant');
             // Default / Applicant
             responseBody = {
                 role: 'Applicant',
@@ -44,62 +47,73 @@ export const mockAuthInterceptor: HttpInterceptorFn = (req, next) => {
         return of(new HttpResponse({ status: 200, body: responseBody })).pipe(delay(1000));
     }
 
-    // Pass through other requests
+    // Mock Recent Requests
     if (url.endsWith('/Dashboard/recent-requests') && method === 'GET') {
         console.log('Mocking Recent Requests API');
         const mockData = {
             success: true,
             data: [
-                {
-                    id: "1",
-                    requestId: "REQ-2023-001",
-                    governorate: "Muscat",
-                    applicant: "Ahmed Ali Al-Harthy",
-                    requestType: "New Connection",
-                    createdDate: "2023-10-01",
-                    lastActionDate: "2023-10-02",
-                    status: "Pending"
-                },
-                {
-                    id: "2",
-                    requestId: "REQ-2023-005",
-                    governorate: "Salalah",
-                    applicant: "Fatima Al-Said",
-                    requestType: "Maintenance",
-                    createdDate: "2023-09-28",
-                    lastActionDate: "2023-09-30",
-                    status: "Approved"
-                },
+
                 {
                     id: "3",
-                    requestId: "REQ-2023-008",
-                    governorate: "Sohar",
+                    requestId: "REQ-2024-003",
+                    governorate: "Muscat",
                     applicant: "Mohamed Al-Balushi",
-                    requestType: "Disconnection",
-                    createdDate: "2023-10-05",
-                    lastActionDate: "2023-10-06",
-                    status: "Rejected"
+                    requestType: "Construction",
+                    createdDate: "2024-06-12T12:53:00",
+                    lastActionDate: "2024-07-15T12:53:00",
+                    status: "Completed"
                 },
                 {
                     id: "4",
-                    requestId: "REQ-2023-012",
-                    governorate: "Nizwa",
-                    applicant: "Sara Al-Kindi",
-                    requestType: "Meter Replacement",
-                    createdDate: "2023-10-10",
-                    lastActionDate: "2023-10-11",
+                    requestId: "REQ-2024-004",
+                    governorate: "Sohar",
+                    applicant: "Khalid Al-Amrita",
+                    requestType: "Maintenance",
+                    createdDate: "2024-06-14T09:15:00",
+                    lastActionDate: "2024-07-16T10:20:00",
                     status: "In Progress"
                 },
                 {
                     id: "5",
-                    requestId: "REQ-2023-015",
-                    governorate: "Sur",
-                    applicant: "Khalid Al-Araimi",
-                    requestType: "Complaint",
-                    createdDate: "2023-10-12",
-                    lastActionDate: "2023-10-13",
-                    status: "Pending"
-                }
+                    requestId: "REQ-2024-005",
+                    governorate: "Salalah",
+                    applicant: "Sara Al-Jabri",
+                    requestType: "New Connection",
+                    createdDate: "2024-06-15T11:45:00",
+                    lastActionDate: "2024-07-16T14:30:00",
+                    status: "Rejected"
+                },
+                {
+                    id: "6",
+                    requestId: "REQ-2024-006",
+                    governorate: "Nizwa",
+                    applicant: "Omar Al-Kindi",
+                    requestType: "Meter Check",
+                    createdDate: "2024-06-16T08:00:00",
+                    lastActionDate: "2024-07-17T09:00:00",
+                    status: "In Progress"
+                },
+                {
+                    id: "1",
+                    requestId: "REQ-2024-001",
+                    governorate: "Muscat",
+                    applicant: "Ahmed Ali",
+                    requestType: "Construction",
+                    createdDate: "2024-06-12T12:53:00",
+                    lastActionDate: "2024-07-15T12:53:00",
+                    status: "Completed"
+                },
+                {
+                    id: "1",
+                    requestId: "REQ-2024-002",
+                    governorate: "Muscat",
+                    applicant: "Fatima Al-Said",
+                    requestType: "Construction",
+                    createdDate: "2024-06-12T12:53:00",
+                    lastActionDate: "2024-07-15T12:53:00",
+                    status: "Completed"
+                },
             ],
             message: "Data fetched successfully",
             errors: [],
@@ -115,16 +129,186 @@ export const mockAuthInterceptor: HttpInterceptorFn = (req, next) => {
         const mockData = {
             success: true,
             data: {
-                totalRequests: 1250,
-                newRequests: 45,
-                completedRequests: 890,
-                inProgressRequests: 315,
-                growthPercentage: 12.5
+                totalRequests: 5,
+                newRequests: 2,
+                completedRequests: 2,
+                inProgressRequests: 2,
+                growthPercentage: 75
             },
             message: "Stats fetched successfully",
             errors: [],
             timestamp: new Date().toISOString(),
             traceId: "trace-stats-123"
+        };
+        return of(new HttpResponse({ status: 200, body: mockData })).pipe(delay(500));
+    }
+
+    // Mock Notifications
+    if (url.endsWith('/Dashboard/notifications') && method === 'GET') {
+        console.log('Mocking Notifications API');
+
+        const role = localStorage.getItem('mock_role') || 'Applicant';
+        console.log('Fetching notifications for role:', role);
+
+        // Mock data for Applicant
+        const applicantNotifications = [
+            {
+                id: '1',
+                title: 'System Update',
+                description: 'The NOC system will be under maintenance tonight from 12 AM to 4 AM.',
+                time: '2 hours ago',
+                type: 'info',
+                isRead: false
+            },
+            {
+                id: '2',
+                title: 'Request #001 Completed',
+                description: 'Your request for Muscat Construction has been successfully completed.',
+                time: '5 hours ago',
+                type: 'success',
+                isRead: false
+            },
+            {
+                id: '3',
+                title: 'New User Assigned',
+                description: 'Ahmed Al-Balushi was assigned to your pending request #776.',
+                time: '1 day ago',
+                type: 'user', // orange icon
+                isRead: true
+            }
+        ];
+
+        // Mock data for User (Employee)
+        const userNotifications = [
+            { id: '4', title: 'New Request Created', description: 'A new request #889 has been submitted by a citizen.', time: '10 mins ago', type: 'info', isRead: false },
+            { id: '5', title: 'Action Required', description: 'Request #776 is pending your technical approval.', time: '1 hour ago', type: 'warning', isRead: false },
+            { id: '6', title: 'Reminder', description: 'Please submit your weekly performance report by EOD.', time: '3 hours ago', type: 'info', isRead: true }
+        ];
+
+        // Mock data for Admin
+        const adminNotifications = [
+            { id: '7', title: 'New User Created', description: 'User Ahmed Al-Balushi has been registered as an Inspector.', time: '30 mins ago', type: 'success', isRead: false },
+            { id: '8', title: 'New Delegation', description: 'Delegation assigned to HR department for leave approvals.', time: '4 hours ago', type: 'info', isRead: true },
+            { id: '9', title: 'High Server Load', description: 'Server CPU usage exceeded 80% for the last 15 minutes.', time: '6 hours ago', type: 'error', isRead: true }
+        ];
+
+        let dataToReturn = applicantNotifications;
+        if (role === 'User') {
+            dataToReturn = userNotifications;
+        } else if (role === 'Admin') {
+            dataToReturn = adminNotifications;
+        }
+
+        const mockData = {
+            success: true,
+            data: dataToReturn,
+            message: "Notifications fetched successfully",
+            errors: [],
+            timestamp: new Date().toISOString(),
+            traceId: "trace-notif-123"
+        };
+        return of(new HttpResponse({ status: 200, body: mockData })).pipe(delay(500));
+    }
+
+    // Mock Quick Actions
+    if (url.endsWith('/Dashboard/quick-actions') && method === 'GET') {
+        console.log('Mocking Quick Actions API');
+        const role = localStorage.getItem('mock_role') || 'Applicant';
+
+        const applicantActions = [
+            { id: '1', label: 'Submit a new Request', icon: 'add_circle_outline', color: 'green-text' },
+            { id: '2', label: 'Complete last request', icon: 'cloud_upload', color: 'green-text' },
+            { id: '3', label: 'Print last request', icon: 'print', color: 'green-text' }
+        ];
+
+        const userActions = [
+            { id: '4', label: 'Delegate', icon: 'assignment_ind', color: 'blue-text' },
+            { id: '5', label: 'Approve last requests', icon: 'done_all', color: 'blue-text' }
+        ];
+
+        const adminActions = [
+            { id: '6', label: 'Delegate', icon: 'assignment_ind', color: 'red-text' },
+            { id: '7', label: 'Activate Applicant', icon: 'person_add', color: 'red-text' }
+        ];
+
+        let dataToReturn = applicantActions;
+        if (role === 'User') {
+            dataToReturn = userActions;
+        } else if (role === 'Admin') {
+            dataToReturn = adminActions;
+        }
+
+        const mockData = {
+            success: true,
+            data: dataToReturn,
+            message: "Quick actions fetched successfully",
+            errors: [],
+            timestamp: new Date().toISOString(),
+            traceId: "trace-action-123"
+        };
+        return of(new HttpResponse({ status: 200, body: mockData })).pipe(delay(500));
+    }
+
+
+    // Mock Action Required
+    if (url.endsWith('/Dashboard/action-required') && method === 'GET') {
+        console.log('Mocking Action Required API');
+        const role = localStorage.getItem('mock_role') || 'Applicant';
+
+        const applicantActions = [
+            { id: '1', text: 'Complete your last request', type: 'red' },
+            { id: '2', text: 'Your request #234 was updated to complete', type: 'red' }
+        ];
+
+        const userActions = [
+            { id: '3', text: '5 requests in progress need review', type: 'yellow' },
+            { id: '4', text: 'Submit weekly report', type: 'blue' }
+        ];
+
+        const adminActions = [
+            { id: '5', text: 'New user "Ahmed" needs activation', type: 'red' },
+            { id: '6', text: 'Database backup failed', type: 'red' },
+            { id: '7', text: 'System maintenance scheduled', type: 'blue' }
+        ];
+
+        let dataToReturn = applicantActions;
+        if (role === 'User') {
+            dataToReturn = userActions;
+        } else if (role === 'Admin') {
+            dataToReturn = adminActions;
+        }
+
+        const mockData = {
+            success: true,
+            data: dataToReturn,
+            message: "Action required items fetched successfully",
+            errors: [],
+            timestamp: new Date().toISOString(),
+            traceId: "trace-action-req-123"
+        };
+        return of(new HttpResponse({ status: 200, body: mockData })).pipe(delay(500));
+    }
+
+
+    // Mock Monthly Data
+    if (url.endsWith('/Dashboard/monthly-data') && method === 'GET') {
+        console.log('Mocking Monthly Data API');
+
+        const mockData = {
+            success: true,
+            data: {
+                "January": 65,
+                "February": 59,
+                "March": 80,
+                "April": 81,
+                "May": 56,
+                "June": 55,
+                "July": 40
+            },
+            message: "Monthly data fetched successfully",
+            errors: [],
+            timestamp: new Date().toISOString(),
+            traceId: "trace-monthly-123"
         };
         return of(new HttpResponse({ status: 200, body: mockData })).pipe(delay(500));
     }

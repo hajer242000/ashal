@@ -9,6 +9,7 @@ import { SettingComponent } from './setting/setting';
 import { ReportComponent } from './report/report';
 import { UsersComponent } from './users/users';
 import { WorkflowComponent } from './workflow/workflow';
+import { DelegationComponent } from './delegation/delegation.component';
 
 export const APPLICATION_ROUTES: Routes = [
     {
@@ -24,6 +25,7 @@ export const APPLICATION_ROUTES: Routes = [
             { path: 'report', component: ReportComponent },
             { path: 'users', component: UsersComponent },
             { path: 'workflow', component: WorkflowComponent },
+            { path: 'delegation', component: DelegationComponent },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ],
     },

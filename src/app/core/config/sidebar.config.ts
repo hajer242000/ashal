@@ -12,12 +12,14 @@ export const SIDEBAR_CONFIG = {
     [UserRole.User]: [
         { title: 'Dashboard', icon: 'dashboard', route: '/application/dashboard' },
         { title: 'Requests', icon: 'folder_shared', route: '/application/my-request' }, // Sharing existing page
+        { title: 'Delegation', icon: 'assignment_ind', route: '/application/delegation' },
         { title: 'Report', icon: 'assessment', route: '/application/report' },
         { title: 'Setting', icon: 'settings', route: '/application/setting' }, // Sharing existing page
     ],
     [UserRole.Admin]: [
         { title: 'Dashboard', icon: 'dashboard', route: '/application/dashboard' },
         { title: 'Requests', icon: 'folder_shared', route: '/application/my-request' }, // Sharing existing page
+        { title: 'Delegation', icon: 'assignment_ind', route: '/application/delegation' },
         { title: 'Users', icon: 'people', route: '/application/users' },
         { title: 'Report', icon: 'assessment', route: '/application/report' },
         { title: 'Workflow', icon: 'schema', route: '/application/workflow' },
