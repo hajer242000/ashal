@@ -1,4 +1,321 @@
-<div class="p-6">
-    <h2 class="text-2xl font-bold mb-4">Settings</h2>
-    <p>Manage your settings here.</p>
+<div class="px-8 py-8 h-full flex flex-col">
+    <h1 class="text-2xl font-bold text-black mb-6">Settings</h1>
+
+    <!-- Tabs -->
+    <div class="flex gap-8 border-b border-gray-100 mb-8">
+        <button (click)="setActiveTab('edit-profile')"
+            [class]="activeTab === 'edit-profile' ? 'text-[#003d7b] border-b-2 border-[#003d7b] font-bold' : 'text-gray-400 font-medium hover:text-gray-600'"
+            class="pb-3 text-sm transition-all flex items-center gap-2">
+            <span class="material-icons text-lg">person</span>
+            Edit Profile
+        </button>
+        <button (click)="setActiveTab('preferences')"
+            [class]="activeTab === 'preferences' ? 'text-[#003d7b] border-b-2 border-[#003d7b] font-bold' : 'text-gray-400 font-medium hover:text-gray-600'"
+            class="pb-3 text-sm transition-all flex items-center gap-2">
+            <span class="material-icons text-lg">tune</span>
+            Preferences
+        </button>
+        <button (click)="setActiveTab('security')"
+            [class]="activeTab === 'security' ? 'text-[#003d7b] border-b-2 border-[#003d7b] font-bold' : 'text-gray-400 font-medium hover:text-gray-600'"
+            class="pb-3 text-sm transition-all flex items-center gap-2">
+            <span class="material-icons text-lg">lock</span>
+            Security
+        </button>
+    </div>
+
+    <!-- Edit Profile Content -->
+    <div *ngIf="activeTab === 'edit-profile'"
+        class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-5xl">
+        <div class="mb-8">
+            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <span class="material-icons text-[#008b37]">person</span>
+                Edit Profile
+            </h2>
+            <p class="text-gray-500 text-sm mt-1">Update your personal information and account details.</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-8">
+
+            <!-- Full Name -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">Full Name</label>
+                <div
+                    class="flex items-center bg-gray-50 rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-[#003d7b] transition-all">
+                    <span class="material-icons text-gray-400 text-sm mr-3">badge</span>
+                    <input type="text" [(ngModel)]="profileData.fullName"
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-700 font-medium p-0"
+                        placeholder="Full Name">
+                </div>
+            </div>
+
+            <!-- Username -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">Username</label>
+                <div
+                    class="flex items-center bg-gray-50 rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-[#003d7b] transition-all">
+                    <span class="material-icons text-gray-400 text-sm mr-3">alternate_email</span>
+                    <input type="text" [(ngModel)]="profileData.username"
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-700 font-medium p-0"
+                        placeholder="Username">
+                </div>
+            </div>
+
+            <!-- Email Address -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">Email Address</label>
+                <div
+                    class="flex items-center bg-gray-50 rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-[#003d7b] transition-all">
+                    <span class="material-icons text-gray-400 text-sm mr-3">email</span>
+                    <input type="email" [(ngModel)]="profileData.email"
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-700 font-medium p-0"
+                        placeholder="Email Address">
+                </div>
+            </div>
+
+            <!-- Phone Number -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">Phone Number</label>
+                <div
+                    class="flex items-center bg-gray-50 rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-[#003d7b] transition-all">
+                    <span class="material-icons text-gray-400 text-sm mr-3">phone</span>
+                    <input type="tel" [(ngModel)]="profileData.phoneNumber"
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-700 font-medium p-0"
+                        placeholder="Phone Number">
+                </div>
+            </div>
+
+            <!-- ID Number -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">ID Number</label>
+                <div
+                    class="flex items-center bg-gray-50 rounded-lg px-4 py-3 focus-within:ring-2 focus-within:ring-[#003d7b] transition-all">
+                    <span class="material-icons text-gray-400 text-sm mr-3">fingerprint</span>
+                    <input type="text" [(ngModel)]="profileData.idNumber"
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-700 font-medium p-0"
+                        placeholder="ID Number">
+                </div>
+            </div>
+
+            <!-- Account Type -->
+            <div class="space-y-2">
+                <label class="text-xs font-bold text-gray-700 ml-1">Account Type</label>
+                <div class="flex items-center bg-gray-100 rounded-lg px-4 py-3 cursor-not-allowed">
+                    <span class="material-icons text-gray-400 text-sm mr-3">verified_user</span>
+                    <input type="text" [(ngModel)]="profileData.accountType" disabled
+                        class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full text-gray-500 font-medium p-0 cursor-not-allowed"
+                        placeholder="Account Type">
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end items-center gap-6 mt-12">
+            <button class="text-gray-500 font-medium text-sm hover:text-gray-700">Cancel</button>
+            <button (click)="saveChanges()"
+                class="bg-[#003d7b] hover:bg-[#002a55] text-white rounded-xl px-6 py-3 flex items-center gap-2 shadow-md transition-colors">
+                <span class="material-icons text-sm">save</span>
+                <span class="text-sm font-bold">Save Changes</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Empty States for Other Tabs -->
+    <!-- Preferences Content -->
+    <div *ngIf="activeTab === 'preferences'"
+        class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-5xl">
+        <div class="mb-8">
+            <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                <span class="material-icons text-[#008b37]">notifications</span>
+                Notification Preferences
+            </h2>
+            <p class="text-gray-500 text-sm mt-1">Manage how and when you receive updates from the NOC system.</p>
+        </div>
+
+        <div class="space-y-4">
+            <!-- NOC Request Updates -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-xl">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-600">
+                        <span class="material-icons text-xl">account_box</span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900">NOC Request Updates</h3>
+                        <p class="text-xs text-gray-500">Get notified when the status of your NOC request changes.</p>
+                    </div>
+                </div>
+                <button (click)="preferencesData.nocUpdates = !preferencesData.nocUpdates"
+                    [class.bg-[#008b37]]="preferencesData.nocUpdates" [class.bg-gray-300]="!preferencesData.nocUpdates"
+                    class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none">
+                    <span [class.translate-x-5]="preferencesData.nocUpdates"
+                        [class.translate-x-0]="!preferencesData.nocUpdates"
+                        class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out">
+                        <span [class.opacity-100]="preferencesData.nocUpdates"
+                            [class.opacity-0]="!preferencesData.nocUpdates"
+                            class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-200 ease-in-out">
+                            <svg class="h-3 w-3 text-[#008b37]" fill="currentColor" viewBox="0 0 12 12">
+                                <path
+                                    d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                            </svg>
+                        </span>
+                    </span>
+                </button>
+            </div>
+
+            <!-- New Messages -->
+            <div class="flex items-center justify-between bg-gray-50 p-4 rounded-xl">
+                <div class="flex items-center gap-4">
+                    <div class="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center text-green-600">
+                        <span class="material-icons text-xl">chat</span>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-bold text-gray-900">New Messages</h3>
+                        <p class="text-xs text-gray-500">Receive alerts when you get a new direct message or support
+                            reply.</p>
+                    </div>
+                </div>
+                <button (click)="preferencesData.newMessages = !preferencesData.newMessages"
+                    [class.bg-[#008b37]]="preferencesData.newMessages"
+                    [class.bg-gray-300]="!preferencesData.newMessages"
+                    class="relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none">
+                    <span [class.translate-x-5]="preferencesData.newMessages"
+                        [class.translate-x-0]="!preferencesData.newMessages"
+                        class="pointer-events-none relative inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out">
+                        <span [class.opacity-100]="preferencesData.newMessages"
+                            [class.opacity-0]="!preferencesData.newMessages"
+                            class="absolute inset-0 flex h-full w-full items-center justify-center transition-opacity duration-200 ease-in-out">
+                            <svg class="h-3 w-3 text-[#008b37]" fill="currentColor" viewBox="0 0 12 12">
+                                <path
+                                    d="M3.707 5.293a1 1 0 00-1.414 1.414l1.414-1.414zM5 8l-.707.707a1 1 0 001.414 0L5 8zm4.707-3.293a1 1 0 00-1.414-1.414l1.414 1.414zm-7.414 2l2 2 1.414-1.414-2-2-1.414 1.414zm3.414 2l4-4-1.414-1.414-4 4 1.414 1.414z" />
+                            </svg>
+                        </span>
+                    </span>
+                </button>
+            </div>
+
+
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex justify-end items-center gap-6 mt-12">
+            <button class="text-gray-500 font-medium text-sm hover:text-gray-700">Cancel</button>
+            <button (click)="savePreferences()"
+                class="bg-[#003d7b] hover:bg-[#002a55] text-white rounded-xl px-6 py-3 flex items-center gap-2 shadow-md transition-colors">
+                <span class="material-icons text-sm">save</span>
+                <span class="text-sm font-bold">Save Preferences</span>
+            </button>
+        </div>
+    </div>
+    <!-- Security Content -->
+    <div *ngIf="activeTab === 'security'" class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 max-w-5xl">
+        <div class="mb-8 flex justify-between items-start">
+            <div>
+                <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <span class="material-icons text-green-600">history</span>
+                    Password Management
+                </h2>
+                <p class="text-gray-500 text-sm mt-1">Ensure your account is secure by setting a strong password.</p>
+            </div>
+            <div class="bg-blue-50 text-blue-800 text-xs px-3 py-1.5 rounded-md font-medium flex items-center gap-1">
+                <span class="material-icons text-xs">info</span>
+                Last changed 3 months ago
+            </div>
+        </div>
+
+        <div class="space-y-6 max-w-2xl mx-auto">
+            <!-- Current Password -->
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-gray-700">Current Password</label>
+                <div class="relative">
+                    <span class="material-icons text-gray-400 absolute left-4 top-3 text-sm">vpn_key</span>
+                    <input [type]="passwordVisibility.current ? 'text' : 'password'"
+                        [(ngModel)]="securityData.currentPassword"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[#003d7b] transition-all"
+                        placeholder="Enter your current password">
+                    <button (click)="toggleVisibility('current')" type="button"
+                        class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 focus:outline-none">
+                        <span class="material-icons text-sm">{{ passwordVisibility.current ? 'visibility_off' :
+                            'visibility' }}</span>
+                    </button>
+                </div>
+                <div class="text-right">
+                    <a href="#" class="text-[#003d7b] text-xs font-bold hover:underline">Forgot password?</a>
+                </div>
+            </div>
+
+            <!-- New Password -->
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-gray-700">New Password</label>
+                <div class="relative">
+                    <span class="material-icons text-gray-400 absolute left-4 top-3 text-sm">lock</span>
+                    <input [type]="passwordVisibility.new ? 'text' : 'password'" [(ngModel)]="securityData.newPassword"
+                        (ngModelChange)="checkPasswordStrength()"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[#003d7b] transition-all"
+                        placeholder="Create a new strong password">
+                    <button (click)="toggleVisibility('new')" type="button"
+                        class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 focus:outline-none">
+                        <span class="material-icons text-sm">{{ passwordVisibility.new ? 'visibility_off' : 'visibility'
+                            }}</span>
+                    </button>
+                </div>
+                <!-- Strength Indicator -->
+                <div class="flex items-center justify-between mt-2" *ngIf="securityData.newPassword">
+                    <span class="text-xs text-gray-500">Password Strength</span>
+                    <span class="text-xs font-bold" [ngClass]="passwordStrengthColor">{{ passwordStrengthLabel }}</span>
+                </div>
+                <div class="flex gap-1 h-1.5 mt-1" *ngIf="securityData.newPassword">
+                    <div class="flex-1 rounded-full transition-colors duration-300"
+                        [ngClass]="{'bg-red-500': passwordStrengthScore >= 1, 'bg-gray-200': passwordStrengthScore < 1}">
+                    </div>
+                    <div class="flex-1 rounded-full transition-colors duration-300"
+                        [ngClass]="{'bg-orange-500': passwordStrengthScore >= 2, 'bg-gray-200': passwordStrengthScore < 2}">
+                    </div>
+                    <div class="flex-1 rounded-full transition-colors duration-300"
+                        [ngClass]="{'bg-orange-500': passwordStrengthScore >= 3, 'bg-gray-200': passwordStrengthScore < 3}">
+                    </div>
+                    <div class="flex-1 rounded-full transition-colors duration-300"
+                        [ngClass]="{'bg-green-500': passwordStrengthScore >= 4, 'bg-gray-200': passwordStrengthScore < 4}">
+                    </div>
+                </div>
+                <p class="text-gray-400 text-xs flex items-center gap-1 mt-1">
+                    <span class="material-icons text-[10px]">info</span>
+                    Must be at least 8 characters with numbers & symbols.
+                </p>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="space-y-2">
+                <label class="text-sm font-bold text-gray-700">Confirm New Password</label>
+                <div class="relative">
+                    <span class="material-icons text-gray-400 absolute left-4 top-3 text-sm">lock_reset</span>
+                    <input [type]="passwordVisibility.confirm ? 'text' : 'password'"
+                        [(ngModel)]="securityData.confirmPassword"
+                        class="w-full bg-gray-50 border border-gray-200 rounded-lg py-2.5 pl-10 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-[#003d7b] transition-all"
+                        [class.border-red-500]="!passwordsMatch" [class.focus:ring-red-500]="!passwordsMatch"
+                        placeholder="Re-enter your new password">
+                    <button (click)="toggleVisibility('confirm')" type="button"
+                        class="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600 focus:outline-none">
+                        <span class="material-icons text-sm">{{ passwordVisibility.confirm ? 'visibility_off' :
+                            'visibility' }}</span>
+                    </button>
+                </div>
+                <p *ngIf="!passwordsMatch" class="text-xs text-red-500 font-medium mt-1">
+                    Passwords do not match
+                </p>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex justify-center items-center gap-4 mt-8 pt-4">
+                <button (click)="saveSecurity()" [disabled]="!canSaveSecurity" [class.opacity-50]="!canSaveSecurity"
+                    [class.cursor-not-allowed]="!canSaveSecurity"
+                    class="bg-[#003d7b] hover:bg-[#002a55] text-white rounded-full px-8 py-3 flex items-center gap-2 shadow-lg hover:shadow-xl transition-all">
+                    <span class="material-icons text-sm">save_as</span>
+                    <span class="text-sm font-bold">Change Password</span>
+                </button>
+            </div>
+            <div class="text-center mt-4">
+                <button class="text-gray-500 font-medium text-sm hover:text-gray-700">Cancel</button>
+            </div>
+        </div>
+    </div>
 </div>

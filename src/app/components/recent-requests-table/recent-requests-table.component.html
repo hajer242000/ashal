@@ -11,7 +11,8 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let req of requests; let i = index">
+            <tr *ngFor="let req of requests; let i = index" (click)="navigateToRequest(req.id)"
+                class="cursor-pointer hover:bg-gray-50 transition-colors">
                 <td class="font-bold">{{ i + 1 }}</td>
                 <td>{{ req.governorate }}</td>
                 <td>{{ req.requestType }}</td>

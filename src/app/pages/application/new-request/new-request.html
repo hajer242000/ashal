@@ -1,4 +1,88 @@
-<div class="p-6">
-    <h2 class="text-2xl font-bold mb-4">New Request</h2>
-    <p>Create a new request here.</p>
+<div class="p-8">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">New Request</h2>
+    <p class="text-gray-500 mb-8">Fill in the project details to initiate your NOC request.</p>
+
+    <!-- Stepper Header -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 py-4 px-8 mb-8">
+        <div class="flex items-center justify-between">
+            <ng-container *ngFor="let step of steps; let i = index; let last = last">
+                <!-- Step Item -->
+                <div class="flex flex-col items-center relative z-10">
+                    <div
+                        [class]="'w-10 h-10 rounded-full flex items-center justify-center text-lg font-medium transition-all duration-300 border-4 mb-2 ' + 
+                        (currentStep === step.number ? 'bg-[#003d7b] border-blue-50 text-white' : 
+                         currentStep > step.number ? 'bg-[#008b37] border-green-50 text-white' : 'bg-[#e2e8f0] text-gray-500 border-white')">
+
+                        <span class="material-icons text-base" *ngIf="currentStep <= step.number">{{ step.icon }}</span>
+                        <span class="material-icons text-base" *ngIf="currentStep > step.number">check</span>
+                    </div>
+
+                    <span [class]="'text-xs font-bold tracking-wide ' + 
+                        (currentStep === step.number ? 'text-[#003d7b]' : 
+                         currentStep > step.number ? 'text-[#008b37]' : 'text-gray-400')">
+                        {{ step.title }}
+                    </span>
+                </div>
+
+                <!-- Connecting Line -->
+                <div *ngIf="!last"
+                    [class]="'flex-auto h-1 mx-4 rounded-full transition-all duration-500 ' + 
+                    (currentStep > step.number + 1 ? 'bg-[#008b37]' : 
+                     currentStep === step.number + 1 ? 'bg-gradient-to-r from-[#008b37] to-[#003d7b]' : 'bg-gray-200')">
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <!-- Step Content -->
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+
+        <!-- Step 1: Details -->
+        <div *ngIf="currentStep === 1">
+            <app-request-details-form [data]="requestData"></app-request-details-form>
+        </div>
+
+        <!-- Step 2: Attachment -->
+        <div *ngIf="currentStep === 2">
+            <app-request-attachments [attachments]="attachments"></app-request-attachments>
+        </div>
+
+        <!-- Step 3: Verify (Placeholder) -->
+        <div *ngIf="currentStep === 3" class="text-center py-12">
+            <span class="material-icons text-6xl text-gray-300 mb-4">fact_check</span>
+            <h3 class="text-xl font-medium text-gray-900">Verify Details</h3>
+            <p class="text-gray-500 mt-2">Please review your information before submitting.</p>
+        </div>
+
+        <!-- Step 4: Submit (Placeholder) -->
+        <div *ngIf="currentStep === 4" class="text-center py-12">
+            <span class="material-icons text-6xl text-[#008b37] mb-4">check_circle</span>
+            <h3 class="text-xl font-medium text-gray-900">Ready to Submit</h3>
+            <p class="text-gray-500 mt-2">Your request is ready to be sent for approval.</p>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="flex items-center justify-between mt-8 pt-6 border-t border-gray-100">
+            <button class="btn btn-secondary text-gray-500 hover:text-red-600 hover:border-red-100 hover:bg-red-50"
+                [routerLink]="['/application/my-request']">
+                Cancel
+            </button>
+
+            <div class="flex items-center gap-4">
+                <button *ngIf="currentStep > 1" (click)="prevStep()" class="btn btn-secondary">
+                    Back
+                </button>
+
+                <button *ngIf="currentStep < 4" (click)="nextStep()" class="btn btn-primary">
+                    Next
+                    <span class="material-icons text-sm">arrow_forward</span>
+                </button>
+
+                <button *ngIf="currentStep === 4" (click)="submit()" class="btn btn-primary">
+                    Submit Request
+                    <span class="material-icons text-sm">send</span>
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

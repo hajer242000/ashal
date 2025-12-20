@@ -1,0 +1,112 @@
+<div class="px-8 py-8">
+
+    <!-- Header with Demo Role Switcher -->
+    <div class="flex justify-between items-start mb-6">
+        <div>
+            <h1 class="text-2xl font-bold text-black">Notifications</h1>
+            <p class="text-gray-500 mt-1">Manage your alerts and system updates.</p>
+        </div>
+
+
+    </div>
+
+    <!-- Controls Bar -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+
+        <!-- Tabs -->
+        <div class="bg-gray-100 p-1 rounded-lg flex items-center">
+            <button (click)="setTab('All')"
+                [class]="activeTab === 'All' ? 'bg-[#008b37] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-200'"
+                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all min-w-[60px]">
+                All
+            </button>
+            <button (click)="setTab('Unread')"
+                [class]="activeTab === 'Unread' ? 'bg-[#008b37] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-200'"
+                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all flex items-center gap-2">
+                Unread
+                <span [class]="activeTab === 'Unread' ? 'bg-white text-[#008b37]' : 'bg-red-100 text-red-600'"
+                    class="px-1.5 rounded-full text-xs font-bold">{{ unreadCount }}</span>
+            </button>
+            <button (click)="setTab('Archived')"
+                [class]="activeTab === 'Archived' ? 'bg-[#008b37] text-white shadow-sm' : 'text-gray-600 hover:bg-gray-200'"
+                class="px-4 py-1.5 rounded-md text-sm font-medium transition-all min-w-[80px]">
+                Archived
+            </button>
+        </div>
+
+        <div class="flex items-center gap-4 w-full md:w-auto">
+            <!-- Mock Filters -->
+            <div class="hidden md:flex gap-2">
+                <button
+                    class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-2 hover:bg-gray-50">
+                    <span class="material-icons text-base">filter_list</span> Filter By:
+                </button>
+                <button
+                    class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-1 hover:bg-gray-50">
+                    Date Range <span class="material-icons text-base">expand_more</span>
+                </button>
+                <button
+                    class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-1 hover:bg-gray-50">
+                    Type <span class="material-icons text-base">expand_more</span>
+                </button>
+                <button
+                    class="px-3 py-1.5 border border-gray-200 rounded-lg text-sm text-gray-600 flex items-center gap-1 hover:bg-gray-50">
+                    Priority <span class="material-icons text-base">expand_more</span>
+                </button>
+            </div>
+
+            <button class="text-[#003d7b] text-sm font-bold flex items-center gap-1 hover:underline ml-auto md:ml-0">
+                <span class="material-icons text-base">done_all</span> Mark all as read
+            </button>
+        </div>
+    </div>
+
+    <!-- Notifications List -->
+    <div class="space-y-6">
+        <div *ngFor="let group of groupedNotifications">
+            <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">{{ group.group }}</h3>
+            <div class="space-y-3">
+
+                <div *ngFor="let item of group.items" [class]="'relative bg-white rounded-xl p-5 shadow-sm border border-gray-50 flex gap-4 transition-all hover:shadow-md cursor-pointer group overflow-hidden pl-4 ' + 
+                    (item.type === 'success' ? 'border-l-4 border-l-[#008b37]' : 
+                     (item.type === 'warning' ? 'border-l-4 border-l-amber-400' : 
+                      (item.type === 'info' ? 'border-l-4 border-l-[#003d7b]' : 
+                       (item.type === 'error' ? 'border-l-4 border-l-red-500' : 'border-l-4 border-l-gray-300'))))">
+
+                    <!-- Icon -->
+                    <div [class]="'w-12 h-12 rounded-full flex items-center justify-center flex-shrink-0 ' + 
+                        (item.type === 'success' ? 'bg-green-50 text-[#008b37]' : 
+                         (item.type === 'warning' ? 'bg-amber-50 text-amber-500' : 
+                          (item.type === 'info' ? 'bg-blue-50 text-[#003d7b]' : 
+                           (item.type === 'error' ? 'bg-red-50 text-red-500' : 'bg-gray-100 text-gray-500'))))">
+                        <span class="material-icons">{{ item.icon || 'notifications' }}</span>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="flex-1 min-w-0 pt-0.5">
+                        <div class="flex justify-between items-start">
+                            <h4 class="text-base font-bold text-gray-900 truncate pr-2">{{ item.title }}</h4>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-gray-400 whitespace-nowrap">{{ item.time }}</span>
+                                <div *ngIf="!item.isRead" [class]="'w-2 h-2 rounded-full ' + (
+                                    item.type === 'success' ? 'bg-[#008b37]' : 
+                                    (item.type === 'warning' ? 'bg-amber-400' : 
+                                     (item.type === 'info' ? 'bg-[#003d7b]' : 
+                                      (item.type === 'error' ? 'bg-red-500' : 'bg-gray-400')))
+                                )"></div>
+                            </div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-1 leading-relaxed">{{ item.description }}</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="flex justify-center mt-8">
+            <button class="text-gray-500 text-sm flex items-center gap-1 hover:text-gray-700">
+                Load older notifications <span class="material-icons text-base">expand_more</span>
+            </button>
+        </div>
+    </div>
+</div>

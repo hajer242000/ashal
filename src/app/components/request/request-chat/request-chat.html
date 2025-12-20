@@ -1,0 +1,70 @@
+<div class="flex flex-col h-[600px] bg-white rounded-xl shadow-sm border border-gray-100">
+
+    <!-- Messages Area -->
+    <div class="flex-1 overflow-y-auto p-6 space-y-8">
+
+        <!-- Date Separator -->
+        <div class="flex justify-center">
+            <span class="bg-gray-100 text-gray-500 text-xs px-4 py-1 rounded-full">12 Dec 2025</span>
+        </div>
+
+        <div *ngFor="let msg of messages" class="flex gap-4 w-full items-center" [class.justify-end]="msg.isMe">
+
+            <!-- Avatar (Left for others) -->
+            <div *ngIf="!msg.isMe"
+                class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0 flex items-center justify-center">
+                <img *ngIf="msg.avatar" [src]="msg.avatar" class="w-full h-full object-cover">
+                <span *ngIf="!msg.avatar" class="material-icons text-gray-400">person</span>
+            </div>
+
+            <div class="max-w-[70%]">
+                <!-- Name -->
+                <p class="text-sm font-bold mb-1" [class.text-right]="msg.isMe" [class.text-[#008b37]]="!msg.isMe"
+                    [class.text-[#003d7b]]="msg.isMe">
+                    {{ msg.sender }}
+                </p>
+
+                <!-- Bubble -->
+                <div
+                    [class]="'p-4 rounded-2xl text-sm leading-relaxed ' + 
+                    (msg.isMe ? 'bg-blue-50 text-gray-800 rounded-tr-none' : 'bg-green-50 text-gray-800 rounded-tl-none')">
+                    {{ msg.text }}
+                </div>
+
+                <!-- Time -->
+                <div class="flex items-center gap-1 mt-1" [class.justify-end]="msg.isMe">
+                    <span class="text-xs text-gray-400">{{ msg.time }}</span>
+                    <span *ngIf="msg.isMe" class="material-icons text-xs text-green-500">done_all</span>
+                </div>
+            </div>
+
+            <!-- Avatar (Right for me) -->
+            <div *ngIf="msg.isMe" class="w-10 h-10 rounded-full bg-gray-200 overflow-hidden flex-shrink-0">
+                <!-- <img *ngIf="msg.avatar" [src]="msg.avatar" class="w-full h-full object-cover"> -->
+                <!-- Use a generic user icon for 'Me' if no avatar is provided, or assume avatar is passed -->
+                <div class="w-full h-full bg-[#003d7b] flex items-center justify-center text-white">
+                    <span class="material-icons text-sm">person</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Input Area -->
+    <div class="p-4 border-t border-gray-100">
+        <div class="bg-white border border-gray-200 rounded-full px-4 py-2 flex items-center gap-4 shadow-sm">
+            <button class="text-gray-400 hover:text-gray-600 transition-colors">
+                <span class="material-icons">sentiment_satisfied_alt</span>
+            </button>
+
+            <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()"
+                class="flex-1 bg-transparent border-none focus:ring-0 focus:outline-none text-sm placeholder-gray-400"
+                placeholder="Type your message here...">
+
+            <button (click)="sendMessage()"
+                class="w-10 h-10 bg-[#003d7b] hover:bg-[#002a55] rounded-lg text-white flex items-center justify-center transition-colors shadow-sm">
+                <span class="material-icons ml-1">send</span>
+            </button>
+        </div>
+    </div>
+</div>

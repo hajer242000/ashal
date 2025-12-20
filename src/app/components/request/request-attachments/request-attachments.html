@@ -1,0 +1,297 @@
+<div>
+    <div class="flex items-center justify-between mb-8" *ngIf="!readOnly">
+        <div class="flex items-center gap-4">
+            <span class="material-icons text-3xl text-[#003d7b]">folder_open</span>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Upload Required Documents</h3>
+                <p class="text-sm text-gray-500">Please upload the mandatory files to proceed to the next step.
+                </p>
+            </div>
+        </div>
+        <div class="bg-blue-50 text-[#003d7b] px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2">
+            <span class="material-icons text-sm">info</span>
+            Formats: PDF, KMZ, JPG • Max: 10MB
+        </div>
+    </div>
+
+    <!-- Attachments Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+
+        <!-- 1. Drawing File -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Drawing File GIS/AutoCAD/KMZ <span
+                    *ngIf="!readOnly" class="text-red-500">*</span></label>
+            <input type="file" id="file-drawingFile" hidden (change)="onFileSelected($event, 'drawingFile')"
+                accept=".kmz,.kml,.dwg,.dxf,.shp,.zip" [disabled]="readOnly">
+
+            <!-- UPLOAD STATE -->
+            <div *ngIf="!attachments.drawingFile && !readOnly" (click)="triggerFileInput('file-drawingFile')"
+                (dragover)="onDragOver($event, 'drawingFile')" (dragleave)="onDragLeave($event, 'drawingFile')"
+                (drop)="onDrop($event, 'drawingFile')" [class]="'border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group h-40 ' + 
+                (isDragging.drawingFile ? 'border-[#003d7b] bg-blue-50' : 'border-gray-200 hover:bg-gray-50')">
+                <span class="material-icons text-4xl text-gray-300 group-hover:text-[#003d7b] mb-3">architecture</span>
+                <p class="text-sm font-medium text-gray-700">Drag & Drop or <span
+                        class="text-[#003d7b] underline">Browse</span></p>
+                <p class="text-xs text-gray-400 mt-1">Supports: GIS, AutoCAD, KMZ</p>
+            </div>
+
+            <!-- READ ONLY EMPTY STATE -->
+            <div *ngIf="!attachments.drawingFile && readOnly"
+                class="border rounded-xl p-8 flex flex-col items-center justify-center text-center h-40 bg-gray-50 border-gray-200">
+                <span class="material-icons text-4xl text-gray-300 mb-2">architecture</span>
+                <p class="text-sm font-medium text-gray-500">No file uploaded</p>
+            </div>
+
+            <!-- PREVIEW STATE (Green #008b37) -->
+            <div *ngIf="attachments.drawingFile"
+                class="border border-[#008b37] bg-green-50/20 rounded-xl p-6 flex items-center justify-between relative overflow-hidden h-40">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-[#008b37]"></div>
+                <div class="flex items-center gap-4 ml-2 overflow-hidden">
+                    <div
+                        class="w-12 h-12 bg-green-100 text-[#008b37] rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="material-icons text-2xl">architecture</span>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-bold text-gray-900 truncate">{{ attachments.drawingFile.name }}
+                        </p>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="material-icons text-sm text-[#008b37]">check_circle</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="!readOnly">Upload Complete</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="readOnly">Uploaded</span>
+                            <span class="text-xs text-gray-400">({{ attachments.drawingFile.size }})</span>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="!readOnly" (click)="deleteFile('drawingFile')"
+                    class="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Drawings PDF -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Drawings PDF <span *ngIf="!readOnly"
+                    class="text-red-500">*</span></label>
+            <input type="file" id="file-drawingsPdf" hidden (change)="onFileSelected($event, 'drawingsPdf')"
+                accept=".pdf" [disabled]="readOnly">
+
+            <!-- UPLOAD STATE -->
+            <div *ngIf="!attachments.drawingsPdf && !readOnly" (click)="triggerFileInput('file-drawingsPdf')"
+                (dragover)="onDragOver($event, 'drawingsPdf')" (dragleave)="onDragLeave($event, 'drawingsPdf')"
+                (drop)="onDrop($event, 'drawingsPdf')" [class]="'border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group h-40 ' + 
+                (isDragging.drawingsPdf ? 'border-[#003d7b] bg-blue-50' : 'border-gray-200 hover:bg-gray-50')">
+                <span
+                    class="material-icons text-4xl text-gray-300 group-hover:text-[#003d7b] mb-3">picture_as_pdf</span>
+                <p class="text-sm font-medium text-gray-700">Drag & Drop or <span
+                        class="text-[#003d7b] underline">Browse</span></p>
+                <p class="text-xs text-gray-400 mt-1">Supports: PDF</p>
+            </div>
+
+            <!-- READ ONLY EMPTY STATE -->
+            <div *ngIf="!attachments.drawingsPdf && readOnly"
+                class="border rounded-xl p-8 flex flex-col items-center justify-center text-center h-40 bg-gray-50 border-gray-200">
+                <span class="material-icons text-4xl text-gray-300 mb-2">picture_as_pdf</span>
+                <p class="text-sm font-medium text-gray-500">No file uploaded</p>
+            </div>
+
+            <!-- PREVIEW STATE (Red for PDF) -->
+            <div *ngIf="attachments.drawingsPdf"
+                class="border border-red-200 bg-red-50/20 rounded-xl p-6 flex items-center justify-between relative overflow-hidden h-40">
+                <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+                <div class="flex items-center gap-4 ml-2 overflow-hidden">
+                    <div
+                        class="w-12 h-12 bg-red-100 text-red-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span class="material-icons text-2xl">picture_as_pdf</span>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-bold text-gray-900 truncate">{{ attachments.drawingsPdf.name }}
+                        </p>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="material-icons text-sm text-[#008b37]">check_circle</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="!readOnly">Upload Complete</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="readOnly">Uploaded</span>
+                            <span class="text-xs text-gray-400">({{ attachments.drawingsPdf.size }})</span>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="!readOnly" (click)="deleteFile('drawingsPdf')"
+                    class="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 3. Request Letter -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Request Letter <span *ngIf="!readOnly"
+                    class="text-red-500">*</span></label>
+            <input type="file" id="file-requestLetter" hidden (change)="onFileSelected($event, 'requestLetter')"
+                accept=".pdf,.docx" [disabled]="readOnly">
+
+            <div *ngIf="!attachments.requestLetter && !readOnly" (click)="triggerFileInput('file-requestLetter')"
+                (dragover)="onDragOver($event, 'requestLetter')" (dragleave)="onDragLeave($event, 'requestLetter')"
+                (drop)="onDrop($event, 'requestLetter')" [class]="'border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group h-40 ' + 
+                (isDragging.requestLetter ? 'border-[#003d7b] bg-blue-50' : 'border-gray-200 hover:bg-gray-50')">
+                <span class="material-icons text-4xl text-gray-300 group-hover:text-[#003d7b] mb-3">description</span>
+                <p class="text-sm font-medium text-gray-700">Drag & Drop or <span
+                        class="text-[#003d7b] underline">Browse</span></p>
+                <p class="text-xs text-gray-400 mt-1">Supports: PDF, DOCX</p>
+            </div>
+
+            <!-- READ ONLY EMPTY STATE -->
+            <div *ngIf="!attachments.requestLetter && readOnly"
+                class="border rounded-xl p-8 flex flex-col items-center justify-center text-center h-40 bg-gray-50 border-gray-200">
+                <span class="material-icons text-4xl text-gray-300 mb-2">description</span>
+                <p class="text-sm font-medium text-gray-500">No file uploaded</p>
+            </div>
+
+            <!-- PREVIEW STATE (Dynamic) -->
+            <div *ngIf="attachments.requestLetter"
+                [class]="'rounded-xl p-6 flex items-center justify-between relative overflow-hidden h-40 border ' + 
+                (attachments.requestLetter.extension === 'docx' ? 'border-[#003d7b] bg-blue-50/20' : 'border-red-200 bg-red-50/20')">
+
+                <div [class]="'absolute left-0 top-0 bottom-0 w-1 ' + 
+                   (attachments.requestLetter.extension === 'docx' ? 'bg-[#003d7b]' : 'bg-red-500')"></div>
+
+                <div class="flex items-center gap-4 ml-2 overflow-hidden">
+                    <div
+                        [class]="'w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ' + 
+                        (attachments.requestLetter.extension === 'docx' ? 'bg-blue-100 text-[#003d7b]' : 'bg-red-100 text-red-600')">
+                        <span class="material-icons text-2xl">description</span>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-bold text-gray-900 truncate">{{ attachments.requestLetter.name }}
+                        </p>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="material-icons text-sm text-[#008b37]">check_circle</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="!readOnly">Upload Complete</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="readOnly">Uploaded</span>
+                            <span class="text-xs text-gray-400">({{ attachments.requestLetter.size }})</span>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="!readOnly" (click)="deleteFile('requestLetter')"
+                    class="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 4. Instruction Letter -->
+        <div>
+            <label class="block text-sm font-semibold text-gray-700 mb-2">Instruction Letter</label>
+            <input type="file" id="file-instructionLetter" hidden (change)="onFileSelected($event, 'instructionLetter')"
+                accept=".pdf,.docx" [disabled]="readOnly">
+
+            <div *ngIf="!attachments.instructionLetter && !readOnly"
+                (click)="triggerFileInput('file-instructionLetter')"
+                (dragover)="onDragOver($event, 'instructionLetter')"
+                (dragleave)="onDragLeave($event, 'instructionLetter')" (drop)="onDrop($event, 'instructionLetter')"
+                [class]="'border-2 border-dashed rounded-xl p-8 flex flex-col items-center justify-center text-center transition-colors cursor-pointer group h-40 ' + 
+                (isDragging.instructionLetter ? 'border-[#003d7b] bg-blue-50' : 'border-gray-200 hover:bg-gray-50')">
+                <span class="material-icons text-4xl text-gray-300 group-hover:text-[#003d7b] mb-3">assignment</span>
+                <p class="text-sm font-medium text-gray-700">Drag & Drop or <span
+                        class="text-[#003d7b] underline">Browse</span></p>
+                <p class="text-xs text-gray-400 mt-1">Supports: PDF, DOCX</p>
+            </div>
+
+            <!-- READ ONLY EMPTY STATE -->
+            <div *ngIf="!attachments.instructionLetter && readOnly"
+                class="border rounded-xl p-8 flex flex-col items-center justify-center text-center h-40 bg-gray-50 border-gray-200">
+                <span class="material-icons text-4xl text-gray-300 mb-2">assignment</span>
+                <p class="text-sm font-medium text-gray-500">No file uploaded</p>
+            </div>
+
+            <!-- PREVIEW STATE (Dynamic) -->
+            <div *ngIf="attachments.instructionLetter"
+                [class]="'rounded-xl p-6 flex items-center justify-between relative overflow-hidden h-40 border ' + 
+                 (attachments.instructionLetter.extension === 'docx' ? 'border-[#003d7b] bg-blue-50/20' : 'border-red-200 bg-red-50/20')">
+
+                <div [class]="'absolute left-0 top-0 bottom-0 w-1 ' + 
+                    (attachments.instructionLetter.extension === 'docx' ? 'bg-[#003d7b]' : 'bg-red-500')">
+                </div>
+
+                <div class="flex items-center gap-4 ml-2 overflow-hidden">
+                    <div
+                        [class]="'w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ' + 
+                        (attachments.instructionLetter.extension === 'docx' ? 'bg-blue-100 text-[#003d7b]' : 'bg-red-100 text-red-600')">
+                        <span class="material-icons text-2xl">assignment</span>
+                    </div>
+                    <div class="min-w-0">
+                        <p class="text-sm font-bold text-gray-900 truncate">{{
+                            attachments.instructionLetter.name }}</p>
+                        <div class="flex items-center gap-2 mt-1">
+                            <span class="material-icons text-sm text-[#008b37]">check_circle</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="!readOnly">Upload Complete</span>
+                            <span class="text-xs font-medium text-[#008b37]" *ngIf="readOnly">Uploaded</span>
+                            <span class="text-xs text-gray-400">({{ attachments.instructionLetter.size
+                                }})</span>
+                        </div>
+                    </div>
+                </div>
+                <button *ngIf="!readOnly" (click)="deleteFile('instructionLetter')"
+                    class="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                    <span class="material-icons">delete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Full Width: Undertaking Letter -->
+    <div class="mb-6">
+        <label class="block text-sm font-semibold text-gray-700 mb-2">Undertaking Letter</label>
+        <input type="file" id="file-undertakingLetter" hidden (change)="onFileSelected($event, 'undertakingLetter')"
+            accept=".pdf,.docx" [disabled]="readOnly">
+
+        <div *ngIf="!attachments.undertakingLetter && !readOnly" (click)="triggerFileInput('file-undertakingLetter')"
+            (dragover)="onDragOver($event, 'undertakingLetter')" (dragleave)="onDragLeave($event, 'undertakingLetter')"
+            (drop)="onDrop($event, 'undertakingLetter')" [class]="'border-2 border-dashed border-gray-200 rounded-xl p-8 flex items-center justify-center gap-4 transition-colors cursor-pointer group bg-white ' + 
+            (isDragging.undertakingLetter ? 'border-[#003d7b] bg-blue-50' : 'hover:bg-gray-50')">
+            <span class="material-icons text-4xl text-gray-300 group-hover:text-[#003d7b]">gavel</span>
+            <div class="text-left">
+                <p class="text-sm font-medium text-gray-700">Drag & Drop your file here or <span
+                        class="text-[#003d7b] underline">Browse</span></p>
+                <p class="text-xs text-gray-400 mt-1">Max file size: 5MB</p>
+            </div>
+        </div>
+
+        <!-- READ ONLY EMPTY STATE -->
+        <div *ngIf="!attachments.undertakingLetter && readOnly"
+            class="border rounded-xl p-8 flex items-center justify-center text-center gap-4 h-24 bg-gray-50 border-gray-200">
+            <span class="material-icons text-4xl text-gray-300">gavel</span>
+            <p class="text-sm font-medium text-gray-500">No file uploaded</p>
+        </div>
+
+        <!-- PREVIEW STATE (Dynamic) -->
+        <div *ngIf="attachments.undertakingLetter"
+            [class]="'rounded-xl p-6 flex items-center justify-between relative overflow-hidden border ' +
+            (attachments.undertakingLetter.extension === 'docx' ? 'border-[#003d7b] bg-blue-50/20' : 'border-red-200 bg-red-50/20')">
+
+            <div [class]="'absolute left-0 top-0 bottom-0 w-1 ' + 
+               (attachments.undertakingLetter.extension === 'docx' ? 'bg-[#003d7b]' : 'bg-red-500')"></div>
+
+            <div class="flex items-center gap-4 ml-2 overflow-hidden">
+                <div
+                    [class]="'w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0 ' + 
+                    (attachments.undertakingLetter.extension === 'docx' ? 'bg-blue-100 text-[#003d7b]' : 'bg-red-100 text-red-600')">
+                    <span class="material-icons text-2xl">gavel</span>
+                </div>
+                <div class="min-w-0">
+                    <p class="text-sm font-bold text-gray-900 truncate">{{ attachments.undertakingLetter.name }}
+                    </p>
+                    <div class="flex items-center gap-2 mt-1">
+                        <span class="material-icons text-sm text-[#008b37]">check_circle</span>
+                        <span class="text-xs font-medium text-[#008b37]" *ngIf="!readOnly">Upload Complete</span>
+                        <span class="text-xs font-medium text-[#008b37]" *ngIf="readOnly">Uploaded</span>
+                        <span class="text-xs text-gray-400">({{ attachments.undertakingLetter.size }})</span>
+                    </div>
+                </div>
+            </div>
+            <button *ngIf="!readOnly" (click)="deleteFile('undertakingLetter')"
+                class="p-2 text-gray-400 hover:text-red-500 transition-colors flex-shrink-0">
+                <span class="material-icons">delete</span>
+            </button>
+        </div>
+    </div>
+</div>

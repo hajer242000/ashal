@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { RecentRequest } from '../../core/models/dashboard/recent-request.model';
 
 @Component({
@@ -11,4 +12,10 @@ import { RecentRequest } from '../../core/models/dashboard/recent-request.model'
 })
 export class RecentRequestsTableComponent {
     @Input() requests: RecentRequest[] = [];
+
+    constructor(private router: Router) { }
+
+    navigateToRequest(id: string) {
+        this.router.navigate(['/application/request', id]);
+    }
 }

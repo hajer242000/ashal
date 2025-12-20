@@ -13,6 +13,7 @@ import { UserRole } from '../../../core/models/role.model';
     standalone: true,
     imports: [CommonModule, FilterBarComponent, RecentRequestsTableComponent],
     templateUrl: './my-request.html',
+    styleUrls: ['./my-request.css']
 })
 export class MyRequestComponent implements OnInit {
     requests: RecentRequest[] = [];

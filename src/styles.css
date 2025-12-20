@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "@angular/material/prebuilt-themes/azure-blue.css";
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 /* Fix for Tailwind Preflight vs Angular Material */
 .mat-mdc-form-field {
@@ -31,4 +30,36 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+/* Reusable Form Styles (DRY) */
+.form-control,
+.form-select {
+  @apply w-full px-4 py-2 border border-gray-300 rounded-lg outline-none;
+}
+
+.form-control:focus,
+.form-select:focus {
+  @apply ring-2 ring-[#003d7b] border-[#003d7b];
+}
+
+.form-select {
+  @apply bg-white;
+}
+
+/* Button Styles - DRY Implementation */
+.btn {
+  @apply px-6 py-2.5 rounded-lg font-medium transition-all duration-200 flex items-center gap-2 cursor-pointer;
+}
+
+.btn-primary {
+  @apply bg-[#008b37] text-white hover:bg-[#00702c] shadow-sm hover:shadow active:transform active:scale-95;
+}
+
+.btn-secondary {
+  @apply bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 active:transform active:scale-95;
+}
+
+.btn-outline-primary {
+  @apply border-2 border-[#008b37] text-[#008b37] hover:bg-green-50;
 }

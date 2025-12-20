@@ -1,0 +1,123 @@
+<div class="space-y-6">
+
+    <!-- Header Section (Only show if not readOnly, or maybe keep it consistent? User didn't specify, but let's keep it to maintain UI) -->
+    <div class="flex items-center justify-between mb-8" *ngIf="!readOnly">
+        <div class="flex items-center gap-4">
+            <span class="material-icons text-3xl text-[#003d7b]">assignment</span>
+            <div>
+                <h3 class="text-xl font-bold text-gray-900">Project Details</h3>
+                <p class="text-sm text-gray-500">Please provide the basic information about your project.</p>
+            </div>
+        </div>
+        <div class="bg-blue-50 text-[#003d7b] px-4 py-2 rounded-full text-xs font-semibold flex items-center gap-2">
+            <span class="material-icons text-sm">info</span>
+            All fields are required
+        </div>
+    </div>
+
+    <!-- Top Row: Two Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+        <!-- Request Information Card -->
+        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full flex flex-col">
+            <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-6">
+                <div class="p-2 bg-blue-50 text-[#003d7b] rounded-lg flex items-center justify-center">
+                    <span class="material-icons text-xl">description</span>
+                </div>
+                Request Information
+            </h3>
+
+            <div class="space-y-5 flex-1">
+                <!-- Project Title -->
+                <div>
+                    <input type="text" [(ngModel)]="data.projectTitle" [disabled]="readOnly" class="form-control"
+                        placeholder="Project Title">
+                </div>
+
+                <!-- Request Type -->
+                <div>
+                    <select [(ngModel)]="data.requestType" [disabled]="readOnly" class="form-select text-gray-700">
+                        <option value="" disabled selected>Request Type</option>
+                        <option *ngFor="let type of requestTypes" [value]="type">{{ type }}</option>
+                    </select>
+                </div>
+
+                <!-- Reason -->
+                <div class="h-full">
+                    <textarea [(ngModel)]="data.reason" [disabled]="readOnly" rows="5"
+                        class="form-control h-32 resize-none"
+                        placeholder="Reason for NOC -> Brief explanation required"></textarea>
+                </div>
+            </div>
+        </div>
+
+        <!-- Location & Client Details Card -->
+        <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm h-full flex flex-col">
+            <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-6">
+                <div class="p-2 bg-green-50 text-[#008b37] rounded-lg flex items-center justify-center">
+                    <span class="material-icons text-xl">location_on</span>
+                </div>
+                Location & Client Details
+            </h3>
+
+            <div class="space-y-5 flex-1">
+                <!-- Client Name -->
+                <div>
+                    <input type="text" [(ngModel)]="data.clientName" [disabled]="readOnly" class="form-control"
+                        placeholder="Applicant Client Name">
+                </div>
+
+                <!-- Project Ownership Toggle -->
+                <div class="bg-gray-50 p-4 rounded-lg flex items-center justify-between border border-gray-200">
+                    <div>
+                        <span class="block text-sm font-semibold text-gray-900">Project Ownership</span>
+                        <span class="text-xs text-gray-500">Is the applicant the project owner?</span>
+                    </div>
+
+                    <div class="relative inline-block w-12 h-6 transition-colors duration-200 ease-in-out border-2 rounded-full cursor-pointer"
+                        [class]="data.isProjectOwner ? 'bg-[#003d7b] border-[#003d7b]' : 'bg-gray-200 border-gray-200'"
+                        [style.pointer-events]="readOnly ? 'none' : 'auto'"
+                        (click)="!readOnly && (data.isProjectOwner = !data.isProjectOwner)">
+                        <div class="inline-block w-5 h-5 transition duration-200 ease-in-out transform bg-white rounded-full shadow"
+                            [class]="data.isProjectOwner ? 'translate-x-6' : 'translate-x-0'"></div>
+                    </div>
+                </div>
+
+                <!-- Governorate & District Row -->
+                <div class="grid grid-cols-2 gap-4">
+                    <!-- Governorate -->
+                    <div>
+                        <select [(ngModel)]="data.governorate" [disabled]="readOnly" (change)="onGovernorateChange()"
+                            class="form-select text-gray-700">
+                            <option value="" disabled selected>Governorate</option>
+                            <option value="Muscat">Muscat</option>
+                            <option value="Sohar">Sohar</option>
+                        </select>
+                    </div>
+
+                    <!-- District -->
+                    <div>
+                        <select [(ngModel)]="data.district" [disabled]="!data.governorate || readOnly"
+                            class="form-select disabled:bg-gray-50 disabled:text-gray-400 text-gray-700">
+                            <option value="" disabled selected>District</option>
+                            <option *ngFor="let dist of availableDistricts" [value]="dist">{{ dist }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Additional Details Card (Full Width) -->
+    <div class="bg-white p-6 rounded-xl border border-gray-100 shadow-sm">
+        <h3 class="flex items-center gap-3 text-lg font-bold text-gray-900 mb-6">
+            <div class="p-2 bg-gray-100 text-gray-600 rounded-lg flex items-center justify-center">
+                <span class="material-icons text-xl">notes</span>
+            </div>
+            Additional Details
+        </h3>
+
+        <textarea [(ngModel)]="data.additionalDetails" [disabled]="readOnly" rows="4" class="form-control resize-none"
+            placeholder="Enter any additional information here..."></textarea>
+    </div>
+</div>
