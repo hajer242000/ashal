@@ -18,6 +18,12 @@
                     <span class="nav-title" *ngIf="!isCollapsed">{{ item.title }}</span>
                 </a>
             </li>
+            <li>
+                <a class="nav-item" (click)="logout()">
+                    <mat-icon>logout</mat-icon>
+                    <span class="nav-title" *ngIf="!isCollapsed">Logout</span>
+                </a>
+            </li>
         </ul>
     </nav>
 </div>

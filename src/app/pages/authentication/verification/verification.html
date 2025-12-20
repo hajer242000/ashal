@@ -1,22 +1,55 @@
 <app-authentication-layout>
-  <!-- LEFT -->
-  <div class="left-side">
-    <h1 class="title">Verify Your Identity</h1>
-    <p>Please Enter The Verification Code We Sent To Your Phone</p>
-    <div class="container">
-      <div class="inputfield">
-        <input *ngFor="let digit of otp; let i = index; trackBy: trackByFn" type="text" inputmode="numeric"
-          maxlength="1" class="input" [value]="digit" #otpInput (input)="onInput($event, i)"
-          (keydown)="onKeyDown($event, i)" (focus)="handleFocus(i)" (paste)="handlePaste($event, i)" />
-      </div>
-    </div>
-    <app-button label="Verify" (onClick)="validateOTP()"></app-button>
-  </div>
+  <!-- WRAPPER to help with Styling Scoping -->
+  <div style="display: contents" [class.login-source]="source === 'login'">
 
-  <!-- RIGHT -->
-  <div class="right-side">
-    <h1>Join us - Create new account</h1>
-    <h6>Complete the form to create your account</h6>
-    <app-button label="Login" variant="outline" routerLink="/login"></app-button>
+    <!-- LEFT SIDE -->
+    <div class="left-side">
+      <ng-container *ngIf="source === 'login'; else otpForm">
+        <!-- Login Layout LEFT: Info Panel (Green) -->
+        <h1 class="title" style="color: white;">Security Verification</h1>
+        <h6 style="color: white;">For your security, please complete the Two-Factor Authentication</h6>
+        <!-- Optional: Back button -->
+      </ng-container>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right-side">
+      <ng-container *ngIf="source === 'login'; else infoPanel">
+        <!-- Login Layout RIGHT: OTP Form (White) -->
+        <ng-container *ngTemplateOutlet="otpFormContent"></ng-container>
+      </ng-container>
+    </div>
+
+    <!-- Templates for re-use/swapping -->
+    <ng-template #otpForm>
+      <!-- Register Layout LEFT: OTP Form (White) -->
+      <ng-container *ngTemplateOutlet="otpFormContent"></ng-container>
+    </ng-template>
+
+    <ng-template #infoPanel>
+      <!-- Register Layout RIGHT: Info Panel (Green) -->
+      <h1>Join us - Create new account</h1>
+      <h6>Complete the form to create your account</h6>
+      <app-button label="Login" variant="outline" routerLink="/login"></app-button>
+    </ng-template>
+
+    <!-- The Actual OTP Form Content -->
+    <ng-template #otpFormContent>
+      <h1 class="title" [style.color]="source === 'login' ? '#003d7b' : '#003d7b'">Verify Your Identity</h1>
+      <p>Please Enter The Verification Code We Sent To Your Phone</p>
+      <div class="container">
+        <div class="inputfield">
+          <input *ngFor="let digit of otp; let i = index; trackBy: trackByFn" type="text" inputmode="numeric"
+            maxlength="1" class="input" [value]="digit" #otpInput (input)="onInput($event, i)"
+            (keydown)="onKeyDown($event, i)" (focus)="handleFocus(i)" (paste)="handlePaste($event, i)" />
+        </div>
+      </div>
+      <app-button label="Verify" (onClick)="validateOTP()"></app-button>
+      <ng-container *ngIf="source === 'login'">
+        <button style="margin-top: 20px; background:none; border:none; color:#666; cursor:pointer;"
+          routerLink="/login">Back to Login</button>
+      </ng-container>
+    </ng-template>
+
   </div>
 </app-authentication-layout>

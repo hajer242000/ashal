@@ -6,7 +6,7 @@ import { SidebarComponent } from '../../components/sidebar/sidebar';
 import { AppbarComponent } from '../../components/appbar/appbar';
 
 @Component({
-  selector: 'app-applicant',
+  selector: 'app-application',
   standalone: true,
   imports: [CommonModule, RouterModule, SidebarComponent, AppbarComponent],
   template: `
@@ -21,4 +21,4 @@ import { AppbarComponent } from '../../components/appbar/appbar';
     </div>
   `,
 })
-export class ApplicantComponent { }
+export class ApplicationComponent { }

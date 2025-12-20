@@ -29,7 +29,7 @@ export const routes: Routes = [
     data: { animation: 'ForgotPasswordPage' },
   },
   {
-    path: 'applicant',
-    loadChildren: () => import('./pages/applicant/applicant.routes').then((m) => m.APPLICANT_ROUTES),
+    path: 'application',
+    loadChildren: () => import('./pages/application/application.routes').then((m) => m.APPLICATION_ROUTES),
   },
 ];

@@ -1,5 +1,5 @@
 import { Component, ElementRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthenticationLayout } from '../../../layout/authentication-layout/authentication-layout';
 
@@ -16,6 +16,15 @@ export class Verification implements AfterViewInit {
 
   otp = ['', '', '', '', '', ''];
   isComplete = false;
+  source = 'register'; // Default to register style
+
+  constructor(private route: ActivatedRoute, private router: Router) {
+    this.route.queryParams.subscribe(params => {
+      if (params['source']) {
+        this.source = params['source'];
+      }
+    });
+  }
 
   ngAfterViewInit() {
     // Focus the first input initially
@@ -124,5 +133,11 @@ export class Verification implements AfterViewInit {
 
   validateOTP() {
     alert('Success: ' + this.otp.join(''));
+    if (this.source === 'login') {
+      this.router.navigate(['/application/dashboard']);
+    } else {
+      // For register, maybe go to login or dashboard? keeping as is or nav to login
+      this.router.navigate(['/login']);
+    }
   }
 }

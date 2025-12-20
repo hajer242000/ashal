@@ -1,0 +1,169 @@
+<div class="dashboard-container">
+    <div class="main-content">
+        <!-- Stats Row -->
+        <div class="stats-grid" *ngIf="stats">
+            <!-- Total Requests -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Total Requests</span>
+                    <div class="stat-icon-wrapper blue">
+                        <span class="material-icons">bar_chart</span>
+                    </div>
+                </div>
+                <div class="stat-value">{{ stats.totalRequests }}</div>
+                <div class="stat-footer">
+                    <div class="progress-bar">
+                        <div class="progress blue" [style.width.%]="stats.growthPercentage"></div>
+                    </div>
+                    <div class="stat-meta">
+                        <span class="highlight-blue">{{ stats.growthPercentage }}%</span>
+                        <span class="text-muted">engagement rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New Requests -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">New</span>
+                    <div class="stat-icon-wrapper purple">
+                        <span class="material-icons">add_card</span>
+                    </div>
+                </div>
+                <div class="stat-value">{{ stats.newRequests }}</div>
+                <div class="stat-footer">
+                    <div class="badge purple">+{{ stats.newRequests }} today</div>
+                    <span class="text-muted">Since last login</span>
+                </div>
+            </div>
+
+            <!-- Pending Requests -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Pending</span>
+                    <div class="stat-icon-wrapper yellow">
+                        <span class="material-icons">hourglass_empty</span>
+                    </div>
+                </div>
+                <div class="stat-value">{{ stats.inProgressRequests }}</div>
+                <div class="stat-footer">
+                    <div class="badge yellow">Action Required</div>
+                    <span class="text-muted">In queue</span>
+                </div>
+            </div>
+
+            <!-- Complete Requests -->
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">Complete</span>
+                    <div class="stat-icon-wrapper green">
+                        <span class="material-icons">check_circle</span>
+                    </div>
+                </div>
+                <div class="stat-value">{{ stats.completedRequests }}</div>
+                <div class="stat-footer">
+                    <span class="highlight-green flex-center">
+                        <span class="material-icons small-icon">trending_up</span> 100%
+                    </span>
+                    <span class="text-muted">Completion rate</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Requests Section -->
+        <div class="section-container">
+            <h2 class="section-title">Recent Requests</h2>
+
+            <div class="table-responsive">
+                <table class="custom-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>GOVERNMENT</th>
+                            <th>REQUEST TYPE</th>
+                            <th>CREATED DATE</th>
+                            <th>LAST ACTION DATE</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let req of recentRequests; let i = index">
+                            <td class="font-bold">{{ i + 1 }}</td>
+                            <td>{{ req.governorate }}</td>
+                            <td>{{ req.requestType }}</td>
+                            <td>
+                                <div class="date-cell">
+                                    <span>{{ req.createdDate | date:'dd.MM.yyyy' }}</span>
+                                    <span class="time-sub">{{ req.createdDate | date:'shortTime' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="date-cell">
+                                    <span>{{ req.lastActionDate | date:'dd.MM.yyyy' }}</span>
+                                    <span class="time-sub">{{ req.lastActionDate | date:'shortTime' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="status-pill" [ngClass]="{
+                                    'status-completed': req.status === 'Approved' || req.status === 'Completed',
+                                    'status-pending': req.status === 'Pending' || req.status === 'In Progress',
+                                    'status-rejected': req.status === 'Rejected'
+                                }">
+                                    {{ req.status === 'Approved' ? 'Completed' : req.status }}
+                                    <span class="material-icons tiny-icon"
+                                        *ngIf="req.status === 'Approved'">check_circle</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="view-all">
+                <a routerLink="/application/my-request" class="view-all-link">View all requests</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="right-sidebar">
+        <!-- Action Required Widget -->
+        <div class="widget-card">
+            <h3 class="widget-title">Action Required</h3>
+            <ul class="action-list">
+                <li *ngFor="let item of actionItems">
+                    <span class="dot red"></span>
+                    <span class="action-text">{{ item.text }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Notifications Widget -->
+        <div class="widget-card">
+            <h3 class="widget-title">Notifications</h3>
+            <ul class="action-list">
+                <li *ngFor="let item of notifications">
+                    <span class="dot blue"></span>
+                    <span class="action-text">{{ item.text }}</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Quick Actions Widget -->
+        <div class="widget-card">
+            <h3 class="widget-title">Quick Actions</h3>
+            <div class="quick-actions">
+                <button class="quick-action-btn">
+                    <span class="material-icons green-text">add_circle_outline</span>
+                    <span>Submit a new Request</span>
+                </button>
+                <button class="quick-action-btn">
+                    <span class="material-icons green-text">cloud_upload</span>
+                    <span>Complete last request</span>
+                </button>
+                <button class="quick-action-btn">
+                    <span class="material-icons green-text">print</span>
+                    <span>Print last request</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
