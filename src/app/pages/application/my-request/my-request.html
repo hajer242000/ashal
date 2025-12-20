@@ -1,4 +1,21 @@
 <div class="p-6">
-    <h2 class="text-2xl font-bold mb-4">My Requests</h2>
-    <p>Here are your requests.</p>
+    <div class="flex justify-between items-center mb-6">
+        <div>
+            <h2 class="text-2xl font-bold text-gray-900">My Requests</h2>
+            <p class="text-gray-500 mt-1">Manage and track your requests.</p>
+        </div>
+        <button *ngIf="isApplicant" (click)="onNewRequest()"
+            class="bg-[#008751] text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2 hover:bg-[#006039] transition-colors">
+            <span class="material-icons">add</span>
+            New Request
+        </button>
+    </div>
+
+    <app-filter-bar [governorates]="uniqueGovernorates" [requestTypes]="uniqueRequestTypes"
+        (filterChange)="onFilterChange($event)">
+    </app-filter-bar>
+
+    <div class="bg-white rounded-xl shadow-sm border border-gray-100 mt-6">
+        <app-recent-requests-table [requests]="requests"></app-recent-requests-table>
+    </div>
 </div>

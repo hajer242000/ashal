@@ -1,0 +1,62 @@
+<div class="filter-bar">
+    <div class="filter-group">
+        <div class="filter-label">
+            <span class="material-icons filter-icon">filter_list</span>
+            <span>Filter By</span>
+        </div>
+
+        <div class="dropdown-container">
+            <select class="custom-select" [value]="filters.date"
+                (change)="updateFilter('date', $any($event.target).value)">
+                <option value="All Time">Date: All Time</option>
+                <option value="Today">Date: Today</option>
+                <option value="This Week">Date: This Week</option>
+            </select>
+            <span class="material-icons dropdown-icon">expand_more</span>
+        </div>
+
+        <div class="dropdown-container">
+            <select class="custom-select" [value]="filters.order"
+                (change)="updateFilter('order', $any($event.target).value)">
+                <option value="Newest">Order By: Newest</option>
+                <option value="Oldest">Order By: Oldest</option>
+            </select>
+            <span class="material-icons dropdown-icon">expand_more</span>
+        </div>
+
+        <div class="dropdown-container">
+            <select class="custom-select" [value]="filters.status"
+                (change)="updateFilter('status', $any($event.target).value)">
+                <option value="All">Status: All</option>
+                <option value="New">Status: New</option>
+                <option value="In Progress">Status: In Progress</option>
+                <option value="Completed">Status: Completed</option>
+                <option value="Rejected">Status: Rejected</option>
+            </select>
+            <span class="material-icons dropdown-icon">expand_more</span>
+        </div>
+
+        <div class="dropdown-container">
+            <select class="custom-select" [value]="filters.requestType"
+                (change)="updateFilter('requestType', $any($event.target).value)">
+                <option value="All">Type: All</option>
+                <option *ngFor="let type of requestTypes" [value]="type">{{ type }}</option>
+            </select>
+            <span class="material-icons dropdown-icon">expand_more</span>
+        </div>
+
+        <div class="dropdown-container">
+            <select class="custom-select" [value]="filters.governorate"
+                (change)="updateFilter('governorate', $any($event.target).value)">
+                <option value="All">Government: All</option>
+                <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
+            </select>
+            <span class="material-icons dropdown-icon">expand_more</span>
+        </div>
+    </div>
+
+    <button class="reset-btn" (click)="onReset()">
+        <span class="material-icons reset-icon">refresh</span>
+        Reset Filter
+    </button>
+</div>
