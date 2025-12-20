@@ -3,7 +3,7 @@ import { ApplicationLayout } from '../../layout/application-layout/application-l
 import { DashboardComponent } from './dashboard/dashboard';
 import { MyRequestComponent } from './my-request/my-request';
 import { NewRequestComponent } from './new-request/new-request';
-import { NotificationComponent } from './notification/notification';
+
 import { SupportComponent } from './support/support';
 import { SettingComponent } from './setting/setting';
 import { ReportComponent } from './report/report';

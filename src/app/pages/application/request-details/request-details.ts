@@ -15,7 +15,7 @@ import { RequestChatComponent } from '../../../components/request/request-chat/r
 })
 export class RequestDetailsComponent implements OnInit {
     requestId: string | null = null;
-    activeTab: string = 'Workflow'; // Set Workflow as default for testing/demo per user focus
+    activeTab: string = 'Details';
     tabs: string[] = ['Details', 'Map', 'Workflow', 'Chat', 'Attachments'];
 
     workflowSteps = [
