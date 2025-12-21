@@ -10,6 +10,7 @@ import { RequestAttachmentsComponent } from '../../../components/request/request
     standalone: true,
     imports: [CommonModule, FormsModule, RouterModule, RequestDetailsFormComponent, RequestAttachmentsComponent],
     templateUrl: './new-request.html',
+    styleUrl: './new-request.css'
 })
 export class NewRequestComponent {
     currentStep = 1;

@@ -30,6 +30,19 @@
     border-color: #003d7b;
 }
 
+/* Green Variant (Brand Green) */
+.btn.green {
+    background-color: #008b37;
+    color: white;
+    border-color: #008b37;
+}
+
+.btn.green:hover {
+    background-color: white;
+    color: #008b37;
+    border-color: #008b37;
+}
+
 /* Outline Variant (Transparent with White Border) */
 .btn.outline {
     background-color: transparent;

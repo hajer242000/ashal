@@ -5,54 +5,101 @@
             <span>Filter By</span>
         </div>
 
+        <!-- Date Filter -->
         <div class="dropdown-container">
-            <select class="custom-select" [value]="filters.date"
-                (change)="updateFilter('date', $any($event.target).value)">
-                <option value="All Time">Date: All Time</option>
-                <option value="Today">Date: Today</option>
-                <option value="This Week">Date: This Week</option>
-            </select>
-            <span class="material-icons dropdown-icon">expand_more</span>
+            <button class="custom-select-btn" (click)="toggleDropdown('date')">
+                Date: {{filters.date}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'date'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'date'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'date'">
+                <div class="option-item" (click)="selectOption('date', 'All Time')">Date: All Time</div>
+                <div class="option-item" (click)="selectOption('date', 'Today')">Date: Today</div>
+                <div class="option-item" (click)="selectOption('date', 'This Week')">Date: This Week</div>
+            </div>
         </div>
 
+        <!-- Order Filter -->
         <div class="dropdown-container">
-            <select class="custom-select" [value]="filters.order"
-                (change)="updateFilter('order', $any($event.target).value)">
-                <option value="Newest">Order By: Newest</option>
-                <option value="Oldest">Order By: Oldest</option>
-            </select>
-            <span class="material-icons dropdown-icon">expand_more</span>
+            <button class="custom-select-btn" (click)="toggleDropdown('order')">
+                Order By: {{filters.order}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'order'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'order'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'order'">
+                <div class="option-item" (click)="selectOption('order', 'Newest')">Order By: Newest</div>
+                <div class="option-item" (click)="selectOption('order', 'Oldest')">Order By: Oldest</div>
+            </div>
         </div>
 
+        <!-- Status Filter -->
         <div class="dropdown-container">
-            <select class="custom-select" [value]="filters.status"
-                (change)="updateFilter('status', $any($event.target).value)">
-                <option value="All">Status: All</option>
-                <option value="New">Status: New</option>
-                <option value="In Progress">Status: In Progress</option>
-                <option value="Completed">Status: Completed</option>
-                <option value="Rejected">Status: Rejected</option>
-            </select>
-            <span class="material-icons dropdown-icon">expand_more</span>
+            <button class="custom-select-btn" (click)="toggleDropdown('status')">
+                {{filters.status === 'All' ? 'Status: All' : filters.status}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'status'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'status'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'status'">
+                <div class="option-item" *ngFor="let opt of statusOptions" (click)="selectOption('status', opt.value)">
+                    {{ opt.label }}
+                </div>
+            </div>
         </div>
 
-        <div class="dropdown-container">
-            <select class="custom-select" [value]="filters.requestType"
-                (change)="updateFilter('requestType', $any($event.target).value)">
-                <option value="All">Type: All</option>
-                <option *ngFor="let type of requestTypes" [value]="type">{{ type }}</option>
-            </select>
-            <span class="material-icons dropdown-icon">expand_more</span>
+        <!-- Role Filter (New) -->
+        <div class="dropdown-container" *ngIf="roleOptions.length > 0">
+            <button class="custom-select-btn" (click)="toggleDropdown('role')">
+                {{filters.role === 'All' ? 'Role: All' : 'Role: ' + filters.role}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'role'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'role'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'role'">
+                <div class="option-item" (click)="selectOption('role', 'All')">Role: All</div>
+                <div class="option-item" *ngFor="let role of roleOptions" (click)="selectOption('role', role)">
+                    Role: {{ role }}
+                </div>
+            </div>
         </div>
 
-        <div class="dropdown-container">
-            <select class="custom-select" [value]="filters.governorate"
-                (change)="updateFilter('governorate', $any($event.target).value)">
-                <option value="All">Government: All</option>
-                <option *ngFor="let gov of governorates" [value]="gov">{{ gov }}</option>
-            </select>
-            <span class="material-icons dropdown-icon">expand_more</span>
+        <!-- Request Type Filter -->
+        <div class="dropdown-container" *ngIf="requestTypes.length > 0">
+            <button class="custom-select-btn" (click)="toggleDropdown('requestType')">
+                Type: {{filters.requestType}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'requestType'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'requestType'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'requestType'">
+                <div class="option-item" (click)="selectOption('requestType', 'All')">Type: All</div>
+                <div class="option-item" *ngFor="let type of requestTypes" (click)="selectOption('requestType', type)">
+                    {{ type }}
+                </div>
+            </div>
         </div>
+
+        <!-- Governorate Filter -->
+        <div class="dropdown-container" *ngIf="governorates.length > 0">
+            <button class="custom-select-btn" (click)="toggleDropdown('governorate')">
+                Government: {{filters.governorate}}
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown !== 'governorate'">expand_more</span>
+                <span class="material-icons dropdown-icon" *ngIf="activeDropdown === 'governorate'">expand_less</span>
+            </button>
+            <div class="dropdown-options" *ngIf="activeDropdown === 'governorate'">
+                <div class="option-item" (click)="selectOption('governorate', 'All')">Government: All</div>
+                <div class="option-item" *ngFor="let gov of governorates" (click)="selectOption('governorate', gov)">
+                    {{ gov }}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Toggle -->
+    <div class="view-toggle" *ngIf="showViewToggle">
+        <button class="toggle-btn" [class.active]="currentViewMode === 'grid'" (click)="setViewMode('grid')">
+            <span class="material-icons">grid_view</span>
+        </button>
+        <button class="toggle-btn" [class.active]="currentViewMode === 'list'" (click)="setViewMode('list')">
+            <span class="material-icons">list</span>
+        </button>
     </div>
 
     <button class="reset-btn" (click)="onReset()">

@@ -20,6 +20,7 @@ import { UserRole } from '../../../core/models/role.model';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './notifications.html',
+    styleUrl: './notifications.css'
 })
 export class NotificationsComponent {
     activeTab: 'All' | 'Unread' | 'Archived' = 'All';

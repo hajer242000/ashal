@@ -27,6 +27,10 @@ export const APPLICATION_ROUTES: Routes = [
             { path: 'users', component: UsersComponent },
             { path: 'workflow', component: WorkflowComponent },
             { path: 'delegation', component: DelegationComponent },
+            {
+                path: 'delegation/new',
+                loadComponent: () => import('./delegation/new-delegation/new-delegation.component').then(m => m.NewDelegationComponent)
+            },
             { path: 'request/:id', component: RequestDetailsComponent },
             { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
         ],

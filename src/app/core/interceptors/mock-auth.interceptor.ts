@@ -30,7 +30,7 @@ export const mockAuthInterceptor: HttpInterceptorFn = (req, next) => {
             localStorage.setItem('mock_role', 'User');
             responseBody = {
                 role: 'User',
-                requiresOtp: true,
+                requiresOtp: false,
                 message: 'OTP sent to email'
             };
         } else {

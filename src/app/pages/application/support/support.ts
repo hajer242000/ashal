@@ -6,5 +6,6 @@ import { CommonModule } from '@angular/common';
     standalone: true,
     imports: [CommonModule],
     templateUrl: './support.html',
+    styleUrl: './support.css'
 })
 export class SupportComponent { }

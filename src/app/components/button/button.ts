@@ -11,7 +11,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export class AppButton {
     @Input() label = '';
     @Input() type: 'button' | 'submit' | 'reset' = 'button';
-    @Input() variant: 'primary' | 'outline' = 'primary';
+    @Input() variant: 'primary' | 'outline' | 'green' = 'primary';
     @Input() disabled = false;
 
     @Output() onClick = new EventEmitter<Event>();

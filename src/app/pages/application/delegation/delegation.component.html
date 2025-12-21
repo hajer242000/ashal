@@ -1,0 +1,326 @@
+<div class="page-container">
+    <!-- ================= ADMIN VIEW ================= -->
+    <div class="admin-view" *ngIf="isAdmin">
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Delegation Overview</h2>
+                <p class="text-gray-500 mt-1">Manage access rights and monitor active delegations</p>
+            </div>
+            <div class="header-actions">
+                <!-- Notification icon removed as requested -->
+                <button class="new-delegation-btn bg-blue-900" (click)="navigateToNewDelegation()">
+                    <span class="material-icons">add_circle</span>
+                    New Delegation
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon-wrapper green">
+                    <span class="material-icons">verified_user</span>
+                </div>
+                <span class="stat-badge green">+4 This Week</span>
+                <div class="stat-content">
+                    <div class="stat-value">{{adminStats.active}}</div>
+                    <div class="stat-label">Active Delegations</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-wrapper orange">
+                    <span class="material-icons">pending_actions</span>
+                </div>
+                <span class="stat-badge orange">Action Required</span>
+                <div class="stat-content">
+                    <div class="stat-value">{{adminStats.pending}}</div>
+                    <div class="stat-label">Pending Approval</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-wrapper blue">
+                    <span class="material-icons">timer</span>
+                </div>
+                <div class="stat-content mt-auto">
+                    <div class="stat-value">{{adminStats.expiring}}</div>
+                    <div class="stat-label">Expiring Soon (48h)</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon-wrapper grey">
+                    <span class="material-icons">history</span>
+                </div>
+                <!-- Avatar stack placeholder in top right -->
+                <div class="avatar-stack">
+                    <span class="stack-item"></span><span class="stack-item"></span>
+                </div>
+                <div class="stat-content mt-auto">
+                    <div class="stat-value">{{adminStats.total}}</div>
+                    <div class="stat-label">Total Delegations</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Filters -->
+        <div class="admin-filters-bar">
+            <div class="search-input-wrapper">
+                <span class="material-icons">search</span>
+                <input type="text" placeholder="Search by user, role, or ID..." class="admin-search-input">
+            </div>
+
+            <div class="filter-dropdowns">
+                <button class="filter-btn" (click)="toggleDropdown('status')">
+                    All Statuses
+                    <span class="material-icons" *ngIf="activeDropdown !== 'status'">expand_more</span>
+                    <span class="material-icons" *ngIf="activeDropdown === 'status'">expand_less</span>
+                </button>
+                <button class="filter-btn" (click)="toggleDropdown('role')">
+                    All Roles
+                    <span class="material-icons" *ngIf="activeDropdown !== 'role'">expand_more</span>
+                    <span class="material-icons" *ngIf="activeDropdown === 'role'">expand_less</span>
+                </button>
+            </div>
+
+            <button class="date-range-btn" (click)="toggleDropdown('date')">
+                <span class="material-icons">calendar_today</span>
+                Select Date Range
+            </button>
+
+            <div class="view-toggle">
+                <button class="toggle-btn" [class.active]="adminViewMode === 'grid'" (click)="setAdminViewMode('grid')">
+                    <span class="material-icons">grid_view</span>
+                </button>
+                <button class="toggle-btn" [class.active]="adminViewMode === 'list'" (click)="setAdminViewMode('list')">
+                    <span class="material-icons">list</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Admin Grid/List Container -->
+        <div [ngClass]="adminViewMode === 'grid' ? 'admin-grid' : 'admin-list'">
+            <div class="admin-card" *ngFor="let item of filteredAdminDelegations">
+                <!-- Card Header -->
+                <div class="card-header">
+                    <span class="delegation-id-sm">#{{item.id}} • {{item.type}}</span>
+                    <span class="status-pill" [ngClass]="item.status.toLowerCase()">
+                        <span class="dot"></span> {{item.status}}
+                    </span>
+                </div>
+
+                <!-- Timeline Visual -->
+                <div class="delegation-timeline">
+                    <!-- Delegator -->
+                    <div class="timeline-node">
+                        <div class="avatar-lg" [ngClass]="item.delegator.colorClass">
+                            <!-- Image or Initials -->
+                            {{item.delegator.initials}}
+                        </div>
+                        <div class="node-info">
+                            <span class="node-name">{{item.delegator.name}}</span>
+                            <span class="node-role">{{item.delegator.role}}</span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Connector -->
+                    <div class="timeline-connector">
+                        <div class="line"></div>
+                        <div class="arrow-circle">
+                            <span class="material-icons">arrow_forward</span>
+                        </div>
+                        <div class="line"></div>
+                        <div class="lock-icon" *ngIf="item.status === 'Pending'">
+                            <span class="material-icons">lock_clock</span>
+                        </div>
+                    </div>
+
+                    <!-- Delegate -->
+                    <div class="timeline-node right">
+                        <div class="avatar-lg" [ngClass]="item.delegate.colorClass">
+                            {{item.delegate.initials}}
+                        </div>
+                        <div class="node-info">
+                            <span class="node-name">{{item.delegate.name}}</span>
+                            <span class="node-role">{{item.delegate.role}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Duration Info -->
+                <div class="duration-info-box">
+                    <div class="flex justify-between text-xs mb-1">
+                        <span class="text-gray-400">Sep 24</span>
+                        <span class="text-blue-600 font-bold" *ngIf="item.remaining">{{item.remaining}}</span>
+                        <span class="text-gray-400" *ngIf="!item.remaining">{{item.duration}}</span>
+                        <span class="text-gray-400">Oct 05</span>
+                    </div>
+                    <!-- Progress Bar for Active -->
+                    <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden" *ngIf="item.status === 'Active'">
+                        <div class="h-full bg-green-600 w-1/2"></div>
+                    </div>
+                    <!-- Info Text for Pending -->
+                    <div class="text-xs font-bold text-gray-700 mt-1" *ngIf="item.status === 'Pending'">
+                        REQUESTED DURATION <br>
+                        <span class="text-sm">{{item.startDate}} - {{item.endDate}} ({{item.duration}})</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card-actions mt-4">
+                    <ng-container *ngIf="item.status === 'Pending'">
+                        <div class="flex gap-2 w-full">
+                            <button class="btn-outline flex-1">View Request</button>
+                            <button class="btn-ghost text-red-500">Reject</button>
+                            <button class="btn-solid-blue">Approve</button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="item.status === 'Active' || item.status === 'Expiring'">
+                        <div class="flex gap-2 w-full">
+                            <button class="btn-outline flex-1">Edit Details</button>
+                            <button class="btn-re-soft flex-1 flex items-center justify-center gap-2">
+                                <span class="material-icons icon-sm">block</span> Revoke
+                            </button>
+                        </div>
+                    </ng-container>
+
+                    <ng-container *ngIf="item.status === 'Revoked'">
+                        <div class="flex justify-between items-center w-full mt-2">
+                            <div class="flex items-center gap-2">
+                                <div class="avatar-xs grayscale"></div>
+                                <span class="text-xs text-gray-500">Revoked by Admin</span>
+                            </div>
+                            <button class="btn-xs-grey">View Log</button>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ================= USER VIEW ================= -->
+    <div class="user-view" *ngIf="!isAdmin">
+        <!-- Header -->
+        <div class="header-section">
+            <div>
+                <h2 class="text-2xl font-bold text-gray-900">Existing Delegations</h2>
+                <p class="text-gray-500 mt-1">Monitor active assignments and track delegation timelines.</p>
+            </div>
+            <button class="new-delegation-btn" (click)="navigateToNewDelegation()">
+                <span class="material-icons">add_circle</span>
+                New Delegation
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <app-filter-bar [statusOptions]="statusOptions" (filterChange)="onFilterChange($event)">
+        </app-filter-bar>
+
+        <!-- Delegation List -->
+        <div class="delegation-list">
+            <div class="delegation-card" *ngFor="let item of delegations">
+                <!-- Left: ID & User -->
+                <div class="card-left">
+                    <div class="delegation-id">
+                        <span class="id-label">ID</span>
+                        <span class="id-value">#{{item.id}}</span>
+                    </div>
+
+                    <div class="user-profile">
+                        <div class="avatar" [ngClass]="item.avatarColorClass">
+                            {{item.userInitials}}
+                            <span class="status-dot" [ngClass]="item.onlineStatus"></span>
+                        </div>
+                        <div class="user-info">
+                            <h3 class="user-name">{{item.userName}}</h3>
+                            <span class="user-role" [ngClass]="item.roleClass">{{item.userRole}}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle: Progress & Dates -->
+                <div class="card-middle">
+                    <div class="dates-row">
+                        <div class="date-col">
+                            <span class="date-label">START DATE</span>
+                            <span class="date-value">{{item.startDate}}</span>
+                            <span class="time-value">{{item.startTime}}</span>
+                        </div>
+                        <div class="date-col text-right">
+                            <span class="date-label">END DATE</span>
+                            <span class="date-value">{{item.endDate}}</span>
+                            <span class="time-value">{{item.endTime}}</span>
+                        </div>
+                    </div>
+
+                    <div class="progress-section" *ngIf="item.status === 'Valid'">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill" [style.width]="item.progress + '%'"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span class="progress-text"
+                                [ngClass]="{'hidden': !item.progressText}">{{item.progressText}}</span>
+                            <span class="remaining-text" *ngIf="item.remainingTime">
+                                <span class="material-icons time-icon">schedule</span>
+                                {{item.remainingTime}}
+                            </span>
+
+                        </div>
+                    </div>
+                    <!-- Special case for Invalid/Terminated layout style matching screenshot -->
+                    <div class="progress-section" *ngIf="item.status === 'Invalid'">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill terminated" [style.width]="'100%'"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span class="terminated-badge">Terminated</span>
+                            <span class="ended-text">Ended {{item.endedAgo}}</span>
+                        </div>
+                    </div>
+                    <div class="progress-section" *ngIf="item.status === 'Upcoming'">
+                        <div class="progress-bar-bg">
+                            <div class="progress-bar-fill upcoming" [style.width]="'0%'"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span class="not-started-badge">Not Started</span>
+                            <span class="starts-in-text">
+                                <span class="material-icons time-icon">event</span>
+                                Starts in {{item.startsIn}}
+                            </span>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <!-- Right: Status & Action -->
+                <div class="card-right">
+                    <div class="status-col">
+                        <span class="status-label">STATUS</span>
+                        <div class="status-badge" [ngClass]="item.status.toLowerCase()">
+                            <span class="status-dot"></span>
+                            {{item.status | uppercase}}
+                        </div>
+                    </div>
+
+                    <button class="action-btn">
+                        <span class="material-icons" *ngIf="item.status !== 'Invalid'">more_vert</span>
+                        <span class="material-icons" *ngIf="item.status === 'Invalid'">delete</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer-section">
+            <button class="load-more-btn">
+                Load more delegations
+                <span class="material-icons">expand_more</span>
+            </button>
+        </div>
+    </div>
+</div>

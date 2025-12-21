@@ -26,6 +26,6 @@
 .content-wrapper {
   flex-grow: 1;
   overflow-y: auto;
-  padding: 20px;
+  /* padding: 20px; */
   /* background-color: #f8f9fa; */
 }

@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
     standalone: true,
     imports: [CommonModule, FormsModule],
     templateUrl: './setting.html',
+    styleUrl: './setting.css'
 })
 export class SettingComponent {
     activeTab: 'edit-profile' | 'preferences' | 'security' = 'edit-profile';

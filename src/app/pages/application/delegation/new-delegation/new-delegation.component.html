@@ -1,0 +1,154 @@
+<div class="new-delegation-container">
+    <!-- Main Content -->
+    <div class="main-column">
+        <div class="header">
+            <h2 class="text-2xl font-bold text-gray-900">New Delegation</h2>
+            <p class="text-gray-500 mt-1">Assign temporary access rights to another user</p>
+        </div>
+
+        <!-- Admin Step: Select Delegator -->
+        <div class="step-card" *ngIf="isAdmin">
+            <div class="step-indicator">1</div>
+            <div class="step-content">
+                <div class="section-header">
+                    <h2 class="section-title">Select Delegator</h2>
+                    <span class="badge-required">Required</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-3">Choose the user you are creating this delegation on behalf of.</p>
+
+                <div class="search-box">
+                    <span class="material-icons search-icon">person</span>
+                    <input type="text" placeholder="Search delegator by name or ID..." class="search-input">
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 1 (or 2 for Admin) -->
+        <div class="step-card">
+            <div class="step-indicator">{{ isAdmin ? 2 : 1 }}</div>
+            <div class="step-content">
+                <div class="section-header">
+                    <h2 class="section-title">Select Delegate</h2>
+                    <span class="badge-required">Required</span>
+                </div>
+
+                <div class="search-box">
+                    <span class="material-icons search-icon">person_search</span>
+                    <input type="text" placeholder="Search by name, ID or email..." class="search-input">
+                    <span class="shortcut-hint">⌘K</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2 (or 3 for Admin) -->
+        <div class="step-card">
+            <div class="step-indicator success">{{ isAdmin ? 3 : 2 }}</div>
+            <div class="step-content">
+                <h2 class="section-title">Duration & Access</h2>
+
+                <div class="date-inputs">
+                    <div class="date-field">
+                        <label>START DATE</label>
+                        <div class="input-wrapper">
+                            <span class="date-value">{{startDateStr || 'Select Date'}}</span>
+                            <span class="material-icons">calendar_today</span>
+                        </div>
+                    </div>
+                    <div class="date-field">
+                        <label>END DATE</label>
+                        <div class="input-wrapper">
+                            <span class="date-value">{{endDateStr || 'Select Date'}}</span>
+                            <span class="material-icons">calendar_today</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Calendar Widget -->
+                <div class="calendar-widget">
+                    <div class="calendar-header">
+                        <span class="month-name">{{currentMonthName}}</span>
+                        <div class="calendar-nav">
+                            <span class="material-icons" (click)="prevMonth()">chevron_left</span>
+                            <span class="material-icons" (click)="nextMonth()">chevron_right</span>
+                        </div>
+                    </div>
+                    <div class="calendar-grid">
+                        <div class="day-header" *ngFor="let day of weekDays">{{day}}</div>
+                        <div class="day-cell" *ngFor="let day of calendarDays" [ngClass]="{
+                                'not-current': !day.currentMonth,
+                                'selected': day.selected,
+                                'start-range': day.start,
+                                'end-range': day.end
+                             }" (click)="selectDate(day)">
+                            {{day.day}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary Sidebar -->
+    <div class="summary-column">
+        <div class="summary-card">
+            <div class="summary-header-bg"></div>
+            <div class="summary-content">
+                <h3 class="summary-title">Delegation Summary</h3>
+
+                <!-- Admin Only: Delegator -->
+                <div class="summary-item" *ngIf="isAdmin">
+                    <div class="item-icon-circle">
+                        <span class="material-icons">admin_panel_settings</span>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-label">DELEGATOR (ON BEHALF OF)</span>
+                        <div class="delegate-info">
+                            <strong class="delegate-name">Hajar A.</strong>
+                            <span class="delegate-role">Manager</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="item-icon-circle">
+                        <span class="material-icons">person</span>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-label">DELEGATE TO</span>
+                        <div class="delegate-info">
+                            <strong class="delegate-name">Ahmed Ali</strong>
+                            <span class="delegate-role">NOC Engineer L2</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-item">
+                    <div class="item-icon-circle">
+                        <span class="material-icons">date_range</span>
+                    </div>
+                    <div class="item-details">
+                        <span class="item-label">DURATION</span>
+                        <strong class="duration-head">{{durationDays}}</strong>
+                        <span class="duration-sub">{{durationRange}}</span>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <div class="alert-header">
+                        <span class="material-icons alert-icon">warning</span>
+                        <strong>Important Note</strong>
+                    </div>
+                    <p class="alert-text">
+                        The delegate will inherit all your current access permissions for the selected duration. This
+                        action is logged.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <app-button label="Confirm Delegation" variant="green" (onClick)="onConfirm()">
+        </app-button>
+
+        <button class="cancel-btn" (click)="onCancel()">Cancel</button>
+    </div>
+</div>
